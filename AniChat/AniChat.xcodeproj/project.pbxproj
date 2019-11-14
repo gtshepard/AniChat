@@ -21,6 +21,9 @@
 		85A0D129237DEA56003F77A9 /* ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D128237DEA56003F77A9 /* ContactVC.swift */; };
 		85A0D12B237DEBA1003F77A9 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D12A237DEBA1003F77A9 /* ContactCell.swift */; };
 		85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D12F237E02F0003F77A9 /* InboxVC.swift */; };
+		85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D131237E073C003F77A9 /* MessageCell.swift */; };
+		85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D134237E08A0003F77A9 /* Ext+UIView.swift */; };
+		85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D136237E0A50003F77A9 /* Ext+Date.swift */; };
 		C67DFCD66CA5354C299BD290 /* Pods_AniChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +46,9 @@
 		85A0D128237DEA56003F77A9 /* ContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactVC.swift; sourceTree = "<group>"; };
 		85A0D12A237DEBA1003F77A9 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		85A0D12F237E02F0003F77A9 /* InboxVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxVC.swift; sourceTree = "<group>"; };
+		85A0D131237E073C003F77A9 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		85A0D134237E08A0003F77A9 /* Ext+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
+		85A0D136237E0A50003F77A9 /* Ext+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Date.swift"; sourceTree = "<group>"; };
 		C72418BFE6B295D0AB9B6B86 /* Pods-AniChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.release.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +94,7 @@
 		85A0D102237DB433003F77A9 /* AniChat */ = {
 			isa = PBXGroup;
 			children = (
+				85A0D133237E0886003F77A9 /* Extensions */,
 				85A0D12E237DEEAB003F77A9 /* Client */,
 				85A0D12D237DEE4A003F77A9 /* App */,
 				85A0D123237DE960003F77A9 /* Cell */,
@@ -116,6 +123,7 @@
 			children = (
 				85A0D121237DE88C003F77A9 /* RecentMessageCell.swift */,
 				85A0D12A237DEBA1003F77A9 /* ContactCell.swift */,
+				85A0D131237E073C003F77A9 /* MessageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -145,6 +153,15 @@
 			children = (
 			);
 			path = Client;
+			sourceTree = "<group>";
+		};
+		85A0D133237E0886003F77A9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				85A0D134237E08A0003F77A9 /* Ext+UIView.swift */,
+				85A0D136237E0A50003F77A9 /* Ext+Date.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		8993ADDC72D734F52B8F6BD4 /* Frameworks */ = {
@@ -275,8 +292,11 @@
 				85A0D122237DE88C003F77A9 /* RecentMessageCell.swift in Sources */,
 				85A0D10E237DB433003F77A9 /* AniChat.xcdatamodeld in Sources */,
 				85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */,
+				85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */,
 				85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */,
+				85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */,
 				85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */,
+				85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */,
 				85A0D127237DEA0A003F77A9 /* User.swift in Sources */,
 				85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */,
 				85A0D120237DE5F7003F77A9 /* RecentMessagesVC.swift in Sources */,

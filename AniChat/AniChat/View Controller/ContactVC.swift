@@ -78,10 +78,10 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          
-        print("Did Select")
         dismiss(animated: true) { [weak self] in
             guard let strongSelf = self else { return }
             let inbox = InboxVC()
+            inbox.contact = strongSelf.contacts[indexPath.row]
             strongSelf.recentMessagesVC!.navigationController?.pushViewController(inbox, animated: true)
             }
         }
