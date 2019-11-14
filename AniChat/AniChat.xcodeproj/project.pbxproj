@@ -9,11 +9,18 @@
 /* Begin PBXBuildFile section */
 		85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D103237DB433003F77A9 /* AppDelegate.swift */; };
 		85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D105237DB433003F77A9 /* SceneDelegate.swift */; };
-		85A0D108237DB433003F77A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D107237DB433003F77A9 /* ViewController.swift */; };
+		85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D107237DB433003F77A9 /* LoginVC.swift */; };
 		85A0D10E237DB433003F77A9 /* AniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D10C237DB433003F77A9 /* AniChat.xcdatamodeld */; };
 		85A0D110237DB447003F77A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85A0D10F237DB447003F77A9 /* Assets.xcassets */; };
 		85A0D113237DB447003F77A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85A0D111237DB447003F77A9 /* LaunchScreen.storyboard */; };
 		85A0D11D237DBA2F003F77A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85A0D11C237DBA2F003F77A9 /* GoogleService-Info.plist */; };
+		85A0D120237DE5F7003F77A9 /* RecentMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D11F237DE5F7003F77A9 /* RecentMessagesVC.swift */; };
+		85A0D122237DE88C003F77A9 /* RecentMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D121237DE88C003F77A9 /* RecentMessageCell.swift */; };
+		85A0D125237DE9A2003F77A9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D124237DE9A2003F77A9 /* Message.swift */; };
+		85A0D127237DEA0A003F77A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D126237DEA0A003F77A9 /* User.swift */; };
+		85A0D129237DEA56003F77A9 /* ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D128237DEA56003F77A9 /* ContactVC.swift */; };
+		85A0D12B237DEBA1003F77A9 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D12A237DEBA1003F77A9 /* ContactCell.swift */; };
+		85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D12F237E02F0003F77A9 /* InboxVC.swift */; };
 		C67DFCD66CA5354C299BD290 /* Pods_AniChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -23,12 +30,19 @@
 		85A0D100237DB433003F77A9 /* AniChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AniChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A0D103237DB433003F77A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85A0D105237DB433003F77A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		85A0D107237DB433003F77A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		85A0D107237DB433003F77A9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		85A0D10D237DB433003F77A9 /* AniChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AniChat.xcdatamodel; sourceTree = "<group>"; };
 		85A0D10F237DB447003F77A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85A0D112237DB447003F77A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85A0D114237DB447003F77A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85A0D11C237DBA2F003F77A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		85A0D11F237DE5F7003F77A9 /* RecentMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessagesVC.swift; sourceTree = "<group>"; };
+		85A0D121237DE88C003F77A9 /* RecentMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessageCell.swift; sourceTree = "<group>"; };
+		85A0D124237DE9A2003F77A9 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		85A0D126237DEA0A003F77A9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		85A0D128237DEA56003F77A9 /* ContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactVC.swift; sourceTree = "<group>"; };
+		85A0D12A237DEBA1003F77A9 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		85A0D12F237E02F0003F77A9 /* InboxVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxVC.swift; sourceTree = "<group>"; };
 		C72418BFE6B295D0AB9B6B86 /* Pods-AniChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.release.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,16 +88,63 @@
 		85A0D102237DB433003F77A9 /* AniChat */ = {
 			isa = PBXGroup;
 			children = (
-				85A0D103237DB433003F77A9 /* AppDelegate.swift */,
-				85A0D105237DB433003F77A9 /* SceneDelegate.swift */,
-				85A0D107237DB433003F77A9 /* ViewController.swift */,
+				85A0D12E237DEEAB003F77A9 /* Client */,
+				85A0D12D237DEE4A003F77A9 /* App */,
+				85A0D123237DE960003F77A9 /* Cell */,
+				85A0D11E237DE561003F77A9 /* Model */,
+				85A0D12C237DEE0F003F77A9 /* View Controller */,
 				85A0D10F237DB447003F77A9 /* Assets.xcassets */,
 				85A0D111237DB447003F77A9 /* LaunchScreen.storyboard */,
 				85A0D11C237DBA2F003F77A9 /* GoogleService-Info.plist */,
 				85A0D114237DB447003F77A9 /* Info.plist */,
-				85A0D10C237DB433003F77A9 /* AniChat.xcdatamodeld */,
 			);
 			path = AniChat;
+			sourceTree = "<group>";
+		};
+		85A0D11E237DE561003F77A9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				85A0D10C237DB433003F77A9 /* AniChat.xcdatamodeld */,
+				85A0D124237DE9A2003F77A9 /* Message.swift */,
+				85A0D126237DEA0A003F77A9 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		85A0D123237DE960003F77A9 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				85A0D121237DE88C003F77A9 /* RecentMessageCell.swift */,
+				85A0D12A237DEBA1003F77A9 /* ContactCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		85A0D12C237DEE0F003F77A9 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				85A0D11F237DE5F7003F77A9 /* RecentMessagesVC.swift */,
+				85A0D107237DB433003F77A9 /* LoginVC.swift */,
+				85A0D128237DEA56003F77A9 /* ContactVC.swift */,
+				85A0D12F237E02F0003F77A9 /* InboxVC.swift */,
+			);
+			path = "View Controller";
+			sourceTree = "<group>";
+		};
+		85A0D12D237DEE4A003F77A9 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				85A0D103237DB433003F77A9 /* AppDelegate.swift */,
+				85A0D105237DB433003F77A9 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		85A0D12E237DEEAB003F77A9 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Client;
 			sourceTree = "<group>";
 		};
 		8993ADDC72D734F52B8F6BD4 /* Frameworks */ = {
@@ -209,10 +270,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85A0D12B237DEBA1003F77A9 /* ContactCell.swift in Sources */,
+				85A0D129237DEA56003F77A9 /* ContactVC.swift in Sources */,
+				85A0D122237DE88C003F77A9 /* RecentMessageCell.swift in Sources */,
 				85A0D10E237DB433003F77A9 /* AniChat.xcdatamodeld in Sources */,
-				85A0D108237DB433003F77A9 /* ViewController.swift in Sources */,
+				85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */,
+				85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */,
 				85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */,
+				85A0D127237DEA0A003F77A9 /* User.swift in Sources */,
 				85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */,
+				85A0D120237DE5F7003F77A9 /* RecentMessagesVC.swift in Sources */,
+				85A0D125237DE9A2003F77A9 /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
