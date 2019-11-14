@@ -12,18 +12,10 @@ import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    lazy var database = Database.database().reference()
-    var window: UIWindow?
-    var navigationController: UINavigationController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        navigationController = UINavigationController(rootViewController: ViewController())
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.backgroundColor = UIColor.white
-        window?.makeKeyAndVisible()
-        window?.rootViewController = navigationController
+       
         
         FirebaseApp.configure()
         return true
