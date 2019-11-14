@@ -13,4 +13,5 @@ class Message: NSObject {
      var date: Date?
      var text: String?
      var incoming: Bool?
+     var useProfile: Bool?
 }

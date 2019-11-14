@@ -73,7 +73,7 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
                       message.fromId = dictonary["fromId"] as! String
                       message.text = dictonary["text"] as! String
           
-                      let date = dictonary["date"] as! String
+                     let date = dictonary["date"] as! NSNumber
                      
                     
                       if message.toId == Auth.auth().currentUser?.uid {
@@ -106,6 +106,7 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
              message.date = Date()
              message.text = text
              message.incoming = false
+             message.useProfile = true
              realTimeSend(message: message)
              sendBarTF.text = ""
         }
@@ -122,7 +123,6 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
         
         
         @objc func handleSendButtonTap() {
-            
             if let msg = sendBarTF.text, !msg.isEmpty {
                  sendMessage(text: msg)
             }
@@ -200,6 +200,8 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                 let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as?
                 MessageCell
+                
+                cell?.message = messages[indexPath.row]
                 
 //
 //                if let toId = messages[indexPath.row].toId {

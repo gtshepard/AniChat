@@ -53,8 +53,10 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 contact.id = snapshot.key
                 contact.name = (user["name"] as! String)
                 contact.email = (user["email"] as! String)
-                strongSelf.contacts.append(contact)
-                strongSelf.contactTV.reloadData()
+                if snapshot.key != Auth.auth().currentUser?.uid {
+                    strongSelf.contacts.append(contact)
+                    strongSelf.contactTV.reloadData()
+                }
             }
         }
     }
