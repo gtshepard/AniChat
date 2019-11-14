@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,9 +14,13 @@
 		85A0D10E237DB433003F77A9 /* AniChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D10C237DB433003F77A9 /* AniChat.xcdatamodeld */; };
 		85A0D110237DB447003F77A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85A0D10F237DB447003F77A9 /* Assets.xcassets */; };
 		85A0D113237DB447003F77A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85A0D111237DB447003F77A9 /* LaunchScreen.storyboard */; };
+		85A0D11D237DBA2F003F77A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 85A0D11C237DBA2F003F77A9 /* GoogleService-Info.plist */; };
+		C67DFCD66CA5354C299BD290 /* Pods_AniChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		137F997638EB4331011ED339 /* Pods-AniChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.debug.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.debug.xcconfig"; sourceTree = "<group>"; };
+		679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AniChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A0D100237DB433003F77A9 /* AniChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AniChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A0D103237DB433003F77A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85A0D105237DB433003F77A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +30,8 @@
 		85A0D10F237DB447003F77A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85A0D112237DB447003F77A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85A0D114237DB447003F77A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85A0D11C237DBA2F003F77A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C72418BFE6B295D0AB9B6B86 /* Pods-AniChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.release.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +39,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C67DFCD66CA5354C299BD290 /* Pods_AniChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B2657817316CEA4A09BB4ED /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				137F997638EB4331011ED339 /* Pods-AniChat.debug.xcconfig */,
+				C72418BFE6B295D0AB9B6B86 /* Pods-AniChat.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		85A0D0F7237DB433003F77A9 = {
 			isa = PBXGroup;
 			children = (
 				85A0D102237DB433003F77A9 /* AniChat */,
 				85A0D101237DB433003F77A9 /* Products */,
+				7B2657817316CEA4A09BB4ED /* Pods */,
+				8993ADDC72D734F52B8F6BD4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,10 +82,19 @@
 				85A0D109237DB433003F77A9 /* Main.storyboard */,
 				85A0D10F237DB447003F77A9 /* Assets.xcassets */,
 				85A0D111237DB447003F77A9 /* LaunchScreen.storyboard */,
+				85A0D11C237DBA2F003F77A9 /* GoogleService-Info.plist */,
 				85A0D114237DB447003F77A9 /* Info.plist */,
 				85A0D10C237DB433003F77A9 /* AniChat.xcdatamodeld */,
 			);
 			path = AniChat;
+			sourceTree = "<group>";
+		};
+		8993ADDC72D734F52B8F6BD4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 85A0D117237DB447003F77A9 /* Build configuration list for PBXNativeTarget "AniChat" */;
 			buildPhases = (
+				407E1E9873F2B36581CC9404 /* [CP] Check Pods Manifest.lock */,
 				85A0D0FC237DB433003F77A9 /* Sources */,
 				85A0D0FD237DB433003F77A9 /* Frameworks */,
 				85A0D0FE237DB433003F77A9 /* Resources */,
+				D0B132052F80C78F8563C3F2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,12 +158,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				85A0D113237DB447003F77A9 /* LaunchScreen.storyboard in Resources */,
+				85A0D11D237DBA2F003F77A9 /* GoogleService-Info.plist in Resources */,
 				85A0D110237DB447003F77A9 /* Assets.xcassets in Resources */,
 				85A0D10B237DB433003F77A9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		407E1E9873F2B36581CC9404 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AniChat-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D0B132052F80C78F8563C3F2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AniChat/Pods-AniChat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AniChat/Pods-AniChat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AniChat/Pods-AniChat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		85A0D0FC237DB433003F77A9 /* Sources */ = {
@@ -286,6 +358,7 @@
 		};
 		85A0D118237DB447003F77A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 137F997638EB4331011ED339 /* Pods-AniChat.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -304,6 +377,7 @@
 		};
 		85A0D119237DB447003F77A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C72418BFE6B295D0AB9B6B86 /* Pods-AniChat.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
