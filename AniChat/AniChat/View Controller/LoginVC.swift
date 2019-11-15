@@ -270,10 +270,35 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     @objc func cleanHandleRegister() {
-        
+
         guard let username = nameTextField.text else { return }
+           print("user", username)
+      
+        guard username.count >= 3 else {
+            alert(message: "Enter Your Name")
+            return
+        }
+     
         guard let email = emailTextField.text else { return }
+        
+        print("email", email)
+        guard email.count >= 4 else {
+            alert(message: "Enter Your Email")
+            return
+        }
+        
+        guard email.contains("@") else {
+            alert(message: "Enter a Valid Email")
+            return
+        }
+        
         guard let password = passwordTextField.text else { return }
+        print("pass:", password)
+        guard password.count >= 6 else {
+            alert(message: "Enter a Password")
+            return
+        }
+
         guard let selectedProfileImage = self.didSelectProfile else { return }
         
         if selectedProfileImage {
@@ -286,15 +311,25 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         } else {
             //display alert select photo
             print("Please select a profile picture")
+            alert(message: "Please Select An Avatar")
         }
-        
-        
+    }
+    func displayAlert(){
+    
     }
     @objc func handleRegister() {
         
-        guard let username = nameTextField.text else { return }
-        guard let email = emailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
+        guard let username = nameTextField.text else {
+            
+            return
+        }
+        guard let email = emailTextField.text else {
+            return
+        }
+        guard let password = passwordTextField.text else {
+            
+            return
+        }
       
 
         Auth.auth().createUser(withEmail: email, password: password)
