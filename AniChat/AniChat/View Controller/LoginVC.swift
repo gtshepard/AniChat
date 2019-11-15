@@ -128,7 +128,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var avatar: String?
     var avatarImage: UIImage?
     var didSelectProfile: Bool?
-    
+    var loginClient: LoginClient = LoginClient()
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AniChat"
@@ -249,7 +249,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         if loginSegmentControl.selectedSegmentIndex == 0 {
             handleLogin()
         } else {
-            handleRegister()
+            cleanHandleRegister()
         }
     }
     
@@ -269,7 +269,18 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             strongSelf.navigationController?.pushViewController(home, animated: true)
         }
     }
-    
+    @objc func cleanHandleRegister() {
+        
+        guard let username = nameTextField.text else { return }
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+             
+        loginClient.register(name: username, email: email, password: password) { [weak self] in
+            guard let strongSelf = self else { return }
+            let home = RecentMessagesVC()
+            strongSelf.navigationController?.pushViewController(home, animated: true)
+        }
+    }
     @objc func handleRegister() {
         
         guard let username = nameTextField.text else { return }
