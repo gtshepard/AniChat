@@ -242,7 +242,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         
         NSLayoutConstraint.activate(collectionConstraint)
         avatarCollectionView.register(AvatarCell.self, forCellWithReuseIdentifier: "id")
-    
+        setupLogo()
     }
 
     @objc func loginOrRegister() {
@@ -349,15 +349,58 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
            
     }
    
+    func setupLogo() {
+        view.addSubview(logoContainer)
+        logoContainer.addSubview(logo)
+        logoContainer.addSubview(logoLabel)
+        logoContainer.backgroundColor = .lightGray
+        logoContainer.isHidden = true
+        logoContainer.rounded(roundedView: logoContainer, toDiameter: 20)
+        logo.backgroundColor = .clear
+        logo.isHidden = true
+        logo.image = UIImage(imageLiteralResourceName: "024-duck")
+        logoLabel.isHidden = true
+        logoLabel.text = "Welcome"
+        logoLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        logoLabel.textColor = .white
+        logoLabel.textAlignment = .center
+        
+        let logoConstraint = [
+            logoContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoContainer.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -120),
+            logoContainer.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1/2),
+            logoContainer.heightAnchor.constraint(equalToConstant: 160),
+            
+            logo.centerXAnchor.constraint(equalTo: logoContainer.centerXAnchor),
+            logo.centerYAnchor.constraint(equalTo: logoContainer.centerYAnchor, constant: -15),
+            logo.widthAnchor.constraint(equalTo: logoContainer.widthAnchor, multiplier: 2/3),
+            logo.heightAnchor.constraint(equalTo: logoContainer.heightAnchor, multiplier: 2/3),
+          
+            logoLabel.centerXAnchor.constraint(equalTo: logoContainer.centerXAnchor),
+            logoLabel.centerYAnchor.constraint(equalTo: logoContainer.centerYAnchor, constant: 60),
+            logoLabel.widthAnchor.constraint(equalTo: logoContainer.widthAnchor, multiplier: 5/6),
+            logoLabel.heightAnchor.constraint(equalTo: logoContainer.heightAnchor, multiplier: 1/6)
+        ]
+              
+        NSLayoutConstraint.activate(logoConstraint)
+        
+        
+    }
+    
     @objc func handleToggle(_ sender: Any){
           let index = loginSegmentControl.selectedSegmentIndex
           let title = loginSegmentControl.titleForSegment(at: index)
           
           if index == 0 {
              avatarCollectionView.isHidden = true
-            
+            logoContainer.isHidden = false
+            logo.isHidden = false
+            logoLabel.isHidden = false
           } else {
              avatarCollectionView.isHidden = false
+             logoContainer.isHidden = true
+             logo.isHidden = true
+             logoLabel.isHidden = true
           }
         
           loginRegisterButton.setTitle(title, for: .normal)
