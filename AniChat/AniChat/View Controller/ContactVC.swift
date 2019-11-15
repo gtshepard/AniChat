@@ -19,14 +19,13 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var recentMessagesVC: RecentMessagesVC?
     var contacts :[User] = []
-
+    var client: ChatClient = ChatClient()
     override func viewDidLoad() {
         super.viewDidLoad()
-     
         navigationItem.title = "Contacts"
-        fetchContacts()
+        
+        observeContacts()
         view.addSubview(contactTV)
-        contactTV.reloadData()
         
         let tableContraints = [
             contactTV.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -41,24 +40,6 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         contactTV.register(ContactCell.self, forCellReuseIdentifier: "ID")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
-    func fetchContacts() {
-        Database.database().reference().child("users").observe(.childAdded){ [weak self] snapshot in
-            guard let strongSelf = self else { return }
-            if let user = snapshot.value as? [String: Any] {
-                let contact = User()
-                contact.id = snapshot.key
-                contact.name = (user["name"] as! String)
-                contact.email = (user["email"] as! String)
-                strongSelf.contacts.append(contact)
-                strongSelf.contactTV.reloadData()
-            }
-        }
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }
@@ -69,20 +50,19 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-    let cell = tableView.dequeueReusableCell(withIdentifier: "ID", for: indexPath) as? ContactCell
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ID", for: indexPath) as? ContactCell
         cell?.contact = contacts[indexPath.row]
-   
         return cell!
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          
-        print("Did Select")
         dismiss(animated: true) { [weak self] in
             guard let strongSelf = self else { return }
             let inbox = InboxVC()
+            inbox.contact = strongSelf.contacts[indexPath.row]
+            inbox.tableView.reloadData()
             strongSelf.recentMessagesVC!.navigationController?.pushViewController(inbox, animated: true)
-            }
         }
+    }
 }
