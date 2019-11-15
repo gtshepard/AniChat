@@ -16,11 +16,23 @@ class LoginClient {
         static let users = reference.child("users")
         
         case user(String)
-        
+       
         var user: DatabaseReference {
             switch self {
             case .user(let uid):
                 return DatabasePath.users.child(uid)
+            }
+        }
+    }
+    
+    enum NoError {
+        case errorless(Error?)
+        var errorless: Bool {
+            switch self {
+            case .errorless(let error):
+                guard let err = error?.localizedDescription else { return true }
+                print(err)
+                return false
             }
         }
     }
@@ -35,21 +47,12 @@ class LoginClient {
         
         Account.reference.createUser(withEmail: email , password: password) { authResult, error in
             
-            if error != nil {
-                print(error!.localizedDescription)
-                return
-            }
-            
+            guard NoError.errorless(error).errorless else { return }
             let userInfo = ["name": name, "email": email] as [String: Any]
             guard let myUid = Account.myUid else { return }
            
             let user = DatabasePath.user(myUid).user.updateChildValues(userInfo) { error, _ in
-                
-                if error != nil {
-                    print(error!.localizedDescription)
-                    return
-                }
-                
+                guard NoError.errorless(error).errorless else { return }
                 completion()
             }
         }
