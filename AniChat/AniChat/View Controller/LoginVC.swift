@@ -274,11 +274,18 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         guard let username = nameTextField.text else { return }
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
-             
-        loginClient.registerWithPhoto(name: username, email: email, password: password, avatar: "050-kangaroo") { [weak self] in
-            guard let strongSelf = self else { return }
-            let home = RecentMessagesVC()
-            strongSelf.navigationController?.pushViewController(home, animated: true)
+        guard let selectedProfileImage = self.didSelectProfile else { return }
+        
+        if selectedProfileImage {
+            guard let avatarName = self.avatar else { return }
+            loginClient.registerWithPhoto(name: username, email: email, password: password, avatar: avatarName) { [weak self] in
+                 guard let strongSelf = self else { return }
+                 let home = RecentMessagesVC()
+                 strongSelf.navigationController?.pushViewController(home, animated: true)
+            }
+        } else {
+            //display alert select photo
+            print("Please select a profile picture")
         }
         
         
@@ -457,8 +464,8 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             print("im selected")
             cell.contentView.layer.borderWidth = 3
             cell.contentView.layer.borderColor = UIColor.systemBlue.cgColor
-            guard let image = cell.avatarImageView?.image else { return }
-            avatarImage = image
+            //guard let image = cell.avatarImageView?.image else { return }
+            //avatarImage = image
             avatar = avatars[indexPath.row]
             didSelectProfile = true
         }
