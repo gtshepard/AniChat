@@ -58,10 +58,13 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             //listen for keyboard events
             NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifications), name: UIResponder.keyboardWillShowNotification , object: nil)
             
-            observeMessages()
-        
+              observeMessages()
         }
-
+        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
+    }
         func observeMessages(){
             let dbPath = Database.database().reference().child("messages")
             dbPath.observe(.childAdded, with: { [weak self] snapshot in
@@ -174,6 +177,7 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             tableView.delegate = self
             tableView.dataSource = self
             tableView.register(MessageCell.self, forCellReuseIdentifier: cellId)
+            tableView.reloadData()
         }
         
         func setupSendBar() {
@@ -201,29 +205,31 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as?
                 MessageCell
                 
-                cell?.message = messages[indexPath.row]
-                
-//
-//                if let toId = messages[indexPath.row].toId {
-//                        let users = Database.database().reference().child("users").child(toId)
-//                        users.observeSingleEvent(of: .value) { snapshot in
-//                        if let dictionary = snapshot.value as? [String: Any]{
-//                                      let name = dictionary["name"]! as! String
-//                                        cell?.toName = name
-//                        }
-//                    }
-//                }
-                
-//
-//                if let userId = Auth.auth().currentUser?.uid {
-//                        let users = Database.database().reference().child("users").child(userId)
-//                        users.observeSingleEvent(of: .value) { snapshot in
-//                        if let dictionary = snapshot.value as? [String: Any]{
-//                                      let name = dictionary["name"]! as! String
-//                                        cell?.userName = name
-//                        }
-//                    }
-//                }
-                return cell!
+                if let toId = messages[indexPath.row].toId {
+                    let users = Database.database().reference().child("users").child(toId)
+                    users.observeSingleEvent(of: .value) { snapshot in
+                        if let dictionary = snapshot.value as? [String: Any]{
+                            let name = dictionary["name"]! as! String
+                            DispatchQueue.main.async {
+                                cell?.recipient = name
+                            }
+                        }
+                    }
+                }
+            
+                if let userId = Auth.auth().currentUser?.uid {
+                    let users = Database.database().reference().child("users").child(userId)
+                    users.observeSingleEvent(of: .value) { snapshot in
+                        if let dictionary = snapshot.value as? [String: Any]{
+                            let name = dictionary["name"]! as! String
+                            DispatchQueue.main.async {
+                                print(name)
+                                cell?.user = name
+                            }
+                        }
+                    }
+                }
+               cell?.message = messages[indexPath.row]
+            return cell!
         }
 }

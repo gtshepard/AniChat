@@ -71,10 +71,8 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-    let cell = tableView.dequeueReusableCell(withIdentifier: "ID", for: indexPath) as? ContactCell
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ID", for: indexPath) as? ContactCell
         cell?.contact = contacts[indexPath.row]
-   
         return cell!
     }
 
@@ -84,6 +82,7 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             guard let strongSelf = self else { return }
             let inbox = InboxVC()
             inbox.contact = strongSelf.contacts[indexPath.row]
+            inbox.tableView.reloadData()
             strongSelf.recentMessagesVC!.navigationController?.pushViewController(inbox, animated: true)
             }
         }

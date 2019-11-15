@@ -24,6 +24,8 @@
 		85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D131237E073C003F77A9 /* MessageCell.swift */; };
 		85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D134237E08A0003F77A9 /* Ext+UIView.swift */; };
 		85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D136237E0A50003F77A9 /* Ext+Date.swift */; };
+		85A0D139237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D138237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift */; };
+		85A0D13B237E29FE003F77A9 /* AvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D13A237E29FE003F77A9 /* AvatarCell.swift */; };
 		C67DFCD66CA5354C299BD290 /* Pods_AniChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +51,8 @@
 		85A0D131237E073C003F77A9 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		85A0D134237E08A0003F77A9 /* Ext+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
 		85A0D136237E0A50003F77A9 /* Ext+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Date.swift"; sourceTree = "<group>"; };
+		85A0D138237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVC+AvatarCollectionView.swift"; sourceTree = "<group>"; };
+		85A0D13A237E29FE003F77A9 /* AvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCell.swift; sourceTree = "<group>"; };
 		C72418BFE6B295D0AB9B6B86 /* Pods-AniChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.release.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +128,7 @@
 				85A0D121237DE88C003F77A9 /* RecentMessageCell.swift */,
 				85A0D12A237DEBA1003F77A9 /* ContactCell.swift */,
 				85A0D131237E073C003F77A9 /* MessageCell.swift */,
+				85A0D13A237E29FE003F77A9 /* AvatarCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 			children = (
 				85A0D134237E08A0003F77A9 /* Ext+UIView.swift */,
 				85A0D136237E0A50003F77A9 /* Ext+Date.swift */,
+				85A0D138237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -297,7 +303,9 @@
 				85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */,
 				85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */,
 				85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */,
+				85A0D13B237E29FE003F77A9 /* AvatarCell.swift in Sources */,
 				85A0D127237DEA0A003F77A9 /* User.swift in Sources */,
+				85A0D139237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift in Sources */,
 				85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */,
 				85A0D120237DE5F7003F77A9 /* RecentMessagesVC.swift in Sources */,
 				85A0D125237DE9A2003F77A9 /* Message.swift in Sources */,

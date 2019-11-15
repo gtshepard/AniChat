@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MessageCell: UITableViewCell {
     
@@ -21,14 +22,17 @@ class MessageCell: UITableViewCell {
     var messageTrailingConstraint: NSLayoutConstraint?
     var avatarLeadingConstraint: NSLayoutConstraint!
     var avatarTrailingConstraint: NSLayoutConstraint!
-
+    var user: String?
+    var recipient: String?
+    
     var message: Message? {
         didSet {
             guard let message = message else { return }
             bubbleView.backgroundColor = message.incoming! ? .white : .darkGray
             messageLabel.textColor =  message.incoming! ? .black : .white
-            
             messageLabel.text = message.text!
+            
+           
             
             if let photo = avatarImageView {
                 photo.removeFromSuperview()
@@ -56,7 +60,12 @@ class MessageCell: UITableViewCell {
                     avatarImageView = UIImageView()
                     avatarImageView!.translatesAutoresizingMaskIntoConstraints = false
                     avatarImageView!.backgroundColor = .lightGray
-                    avatarImageView!.image = UIImage(imageLiteralResourceName: "028-walrus")
+            
+                    if !message.incoming! {
+                        avatarImageView!.image = UIImage(imageLiteralResourceName: "028-walrus")
+                    } else {
+                         avatarImageView!.image = UIImage(imageLiteralResourceName: "032-cow")
+                    }
                     avatarImageView!.clipsToBounds = true
                     //avatarImageView!.setRoundedView(roundedView: avatarImageView!, toDiameter: 30.0)
                     addSubview(avatarImageView!)
@@ -65,8 +74,15 @@ class MessageCell: UITableViewCell {
                     addSubview(nameLabel!)
                     nameLabel?.translatesAutoresizingMaskIntoConstraints = false
                     nameLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-                    //nameLabel?.text =
-                
+            
+                    if !message.incoming! {
+                        nameLabel?.text = Auth.auth().currentUser?.uid
+                        print("cell user:", user)
+                    } else {
+                        nameLabel?.text = message.toId
+                        print("cell rep:", recipient)
+                    }
+            
                     let incomingMessageConstraints = [
                         avatarImageView!.topAnchor.constraint(equalTo: topAnchor , constant: 0),
                         avatarImageView!.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -134,6 +150,36 @@ class MessageCell: UITableViewCell {
         messageTrailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
     }
     
+    func setupCell(){
+        
+    }
+    
+    func recipient(message: Message) -> String {
+        var recipientName: String?
+        if let toId = message.toId {
+           let users = Database.database().reference().child("users").child(toId)
+           users.observeSingleEvent(of: .value) { snapshot in
+                if let dictionary = snapshot.value as? [String: Any]{
+                    let name = dictionary["name"]! as! String
+                    recipientName = name
+                }
+           }
+       }
+        return recipientName!
+   }
+    func user(message: Message) -> String{
+        var userName: String?
+        if let userId = Auth.auth().currentUser?.uid {
+            let users = Database.database().reference().child("users").child(userId)
+            users.observeSingleEvent(of: .value) { snapshot in
+                if let dictionary = snapshot.value as? [String: Any]{
+                    let name = dictionary["name"]! as! String
+                    userName = name
+                }
+            }
+        }
+        return userName!
+    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

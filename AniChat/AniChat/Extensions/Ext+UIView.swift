@@ -19,4 +19,13 @@ extension UIView {
         }
         self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
     }
+    
+    func rounded(roundedView: UIView, toDiameter newSize: CGFloat) {
+          let saveCenter: CGPoint = roundedView.center;
+          let newFrame = CGRect(x: roundedView.frame.origin.x, y: roundedView.frame.origin.y, width: newSize, height: newSize)
+          roundedView.frame = newFrame;
+          roundedView.layer.cornerRadius = newSize / 2.0;
+          roundedView.center = saveCenter;
+      }
+    
 }

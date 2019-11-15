@@ -9,8 +9,8 @@
 import Firebase
 import UIKit
 
-class LoginVC: UIViewController {
-
+class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+  
     let nameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +81,14 @@ class LoginVC: UIViewController {
         return segmentControl
     }()
 
-
+    let avatarCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: CGRect.zero , collectionViewLayout: UICollectionViewFlowLayout.init())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+     
+        collectionView.backgroundColor = .red
+        return collectionView
+    }()
+    
     var navigationBar: UINavigationBar!
     var backgroundView: UIImageView!
     var stackView: UIStackView!
@@ -91,10 +98,19 @@ class LoginVC: UIViewController {
     var emailTextFieldHeightConstraint: NSLayoutConstraint?
     var passwordTextFieldHeightConstraint: NSLayoutConstraint?
 
+    var avatars: [String] = ["001-panda bear","002-dog","003-elephant","004-sheep", "005-fox", "006-crocodile", "007-llama", "008-zebra","009-horse", "010-snake","011-bear", "012-cat", "013-rhinoceros","014-sloth","015-whale","016-frog", "017-hippopotamus", "018-koala", "019-boar", "020-pig","021-guinea pig", "022-squirrel", "023-lemur", "024-duck", "025-monkey", "026-camel",
+        "027-hen", "028-walrus", "029-mole", "030-mouse","031-buffalo", "032-cow","033-owl",
+        "034-giraffe", "035-bat", "036-jaguar", "037-wolf"
+        ,"038-chameleon", "039-ostrich", "040-rabbit", "041-lion", "042-eagle", "043-shark", "044-tiger",
+         "045-raccoon", "046-anteater", "047-penguin", "048-beaver", "049-hedgehog", "050-kangaroo"
+    ]
+    
+    var avatar: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AniChat"
 
+        
         view.backgroundColor = UIColor(white: 0.95, alpha: 1)
         view.addSubview(containerView)
         view.addSubview(loginRegisterButton)
@@ -125,6 +141,7 @@ class LoginVC: UIViewController {
             nameTextField.topAnchor.constraint(equalTo: containerView.topAnchor),
             nameTextField.widthAnchor.constraint(equalTo: containerView.widthAnchor)
         ]
+        
         nameTextFieldHeightConstraint = nameTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 1/3)
         NSLayoutConstraint.activate(nameTextFieldContraints)
         nameTextFieldHeightConstraint?.isActive = true
@@ -176,6 +193,42 @@ class LoginVC: UIViewController {
             loginSegmentControl.heightAnchor.constraint(equalToConstant: 50)
         ]
         NSLayoutConstraint.activate(segmentConstraint)
+        
+        
+        let horizontal = UICollectionViewFlowLayout()
+        horizontal.scrollDirection = .horizontal
+        horizontal.itemSize = CGSize(width: 90, height: 90)
+        horizontal.minimumLineSpacing = CGFloat(exactly: 8.0)!
+        horizontal.prepare()  // <-- call prepare before invalidateLayout
+        horizontal.invalidateLayout()
+        //avatarCollectionView
+        avatarCollectionView.rounded(roundedView: avatarCollectionView, toDiameter: 20)
+        avatarCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        avatarCollectionView.setCollectionViewLayout(horizontal, animated: true)
+        avatarCollectionView.delegate = self
+        avatarCollectionView.dataSource = self
+        avatarCollectionView.backgroundColor = UIColor.lightGray
+//        avatarCollectionView.layer.borderWidth = 0.5
+//        avatarCollectionView.layer.borderColor = UIColor.darkGray.cgColor
+        
+        
+        
+        
+        
+        view.addSubview(avatarCollectionView)
+        let collectionConstraint = [
+           avatarCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+             avatarCollectionView.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -100),
+           avatarCollectionView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
+           avatarCollectionView.heightAnchor.constraint(equalToConstant: 120)
+        ]
+        
+        NSLayoutConstraint.activate(collectionConstraint)
+        avatarCollectionView.register(AvatarCell.self, forCellWithReuseIdentifier: "id")
+        
+        
+   
+
     }
 
     @objc func loginOrRegister() {
@@ -258,5 +311,41 @@ class LoginVC: UIViewController {
           passwordTextFieldHeightConstraint = emailTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: index == 0 ? 1/2: 1/3)
           passwordTextFieldHeightConstraint?.isActive = true
       }
+    
+        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+         return avatars.count
+       }
+       
+       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath)
+         as? AvatarCell
+    
+       
+        cell?.avatar = avatars[indexPath.row]
+        return cell!
+       }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        avatar = avatars[indexPath.row]
+        print(avatar)
+        let collectoionCell = collectionView.cellForItem(at: indexPath)
+        guard let cell = collectoionCell else { return }
+        if cell.isSelected {
+            print("im selected")
+            cell.contentView.layer.borderWidth = 3
+            cell.contentView.layer.borderColor = UIColor.systemBlue.cgColor
+        }
+        
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let collectionCell = collectionView.cellForItem(at: indexPath)
+        guard let cell = collectionCell else { return }
+        if !cell.isSelected {
+              print("im Deselected")
+              cell.contentView.layer.borderWidth = 0
+              cell.contentView.layer.borderColor = UIColor.clear.cgColor
+          }
+    }
 }
 
