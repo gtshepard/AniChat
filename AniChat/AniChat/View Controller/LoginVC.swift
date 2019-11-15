@@ -54,7 +54,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         button.contentHorizontalAlignment = .left
         button.backgroundColor = .lightGray
         button.contentHorizontalAlignment = .center
-        //button.rounded(by:  5)
+        button.rounded(roundedView: button , toDiameter: 20)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.addTarget(self, action: #selector(loginOrRegister), for: .touchUpInside)
@@ -89,6 +89,26 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         return collectionView
     }()
     
+    let logoContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
+    let logo: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.rounded(roundedView: imageView, toDiameter: 20)
+        return imageView
+    }()
+    
+    let logoLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     var navigationBar: UINavigationBar!
     var backgroundView: UIImageView!
     var stackView: UIStackView!
@@ -108,6 +128,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var avatar: String?
     var avatarImage: UIImage?
     var didSelectProfile: Bool?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AniChat"
@@ -191,7 +212,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         let segmentConstraint = [
             loginSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loginSegmentControl.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: -130),
-            loginSegmentControl.widthAnchor.constraint(equalTo: containerView.widthAnchor,multiplier:   3/4),
+            loginSegmentControl.widthAnchor.constraint(equalTo: containerView.widthAnchor,multiplier: 1),
             loginSegmentControl.heightAnchor.constraint(equalToConstant: 50)
         ]
         NSLayoutConstraint.activate(segmentConstraint)
@@ -210,27 +231,18 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         avatarCollectionView.delegate = self
         avatarCollectionView.dataSource = self
         avatarCollectionView.backgroundColor = UIColor.lightGray
-//        avatarCollectionView.layer.borderWidth = 0.5
-//        avatarCollectionView.layer.borderColor = UIColor.darkGray.cgColor
-        
-        
-        
-        
-        
+
         view.addSubview(avatarCollectionView)
         let collectionConstraint = [
            avatarCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-             avatarCollectionView.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -100),
+             avatarCollectionView.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -120),
            avatarCollectionView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
            avatarCollectionView.heightAnchor.constraint(equalToConstant: 140)
         ]
         
         NSLayoutConstraint.activate(collectionConstraint)
         avatarCollectionView.register(AvatarCell.self, forCellWithReuseIdentifier: "id")
-        
-        
-   
-
+    
     }
 
     @objc func loginOrRegister() {
@@ -340,7 +352,14 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     @objc func handleToggle(_ sender: Any){
           let index = loginSegmentControl.selectedSegmentIndex
           let title = loginSegmentControl.titleForSegment(at: index)
-
+          
+          if index == 0 {
+             avatarCollectionView.isHidden = true
+            
+          } else {
+             avatarCollectionView.isHidden = false
+          }
+        
           loginRegisterButton.setTitle(title, for: .normal)
           containerViewHeightConstraint?.constant = index == 0 ? 100:150
 

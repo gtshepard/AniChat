@@ -33,13 +33,11 @@ class ContactCell: UITableViewCell {
         return imageView
     }()
     
-    var chatClient: ChatClient = ChatClient()
+
     var contact: User?{
         didSet{
             
             guard let contact = contact  else { return }
-            chatClient.requestAvatar(user: contact)
-    
             nameLabel.text = contact.name!
             emailLabel.text = contact.email!
             
