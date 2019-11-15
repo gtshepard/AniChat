@@ -106,6 +106,8 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     ]
     
     var avatar: String?
+    var avatarImage: UIImage?
+    var didSelectProfile: Bool?
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AniChat"
@@ -203,7 +205,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         horizontal.invalidateLayout()
         //avatarCollectionView
         avatarCollectionView.rounded(roundedView: avatarCollectionView, toDiameter: 20)
-        avatarCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        avatarCollectionView.contentInset = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
         avatarCollectionView.setCollectionViewLayout(horizontal, animated: true)
         avatarCollectionView.delegate = self
         avatarCollectionView.dataSource = self
@@ -220,7 +222,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
            avatarCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              avatarCollectionView.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -100),
            avatarCollectionView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
-           avatarCollectionView.heightAnchor.constraint(equalToConstant: 120)
+           avatarCollectionView.heightAnchor.constraint(equalToConstant: 140)
         ]
         
         NSLayoutConstraint.activate(collectionConstraint)
@@ -257,37 +259,82 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     @objc func handleRegister() {
+        
         guard let username = nameTextField.text else { return }
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
       
 
         Auth.auth().createUser(withEmail: email, password: password)
-        { [weak self] authResult, err in
-            guard let strongSelf = self else { return }
+        { authResult, err in
+        
             if err != nil {
                 print(err)
                 return
             }
             
+            guard let uid = Auth.auth().currentUser?.uid else { return }
             print("Successfuly Authenticated User")
-            guard let user = Auth.auth().currentUser else {return}
-            let uid = user.uid
+      
+            let dataStore = Storage.storage().reference().child(self.avatar!)
+            guard let image = self.avatarImage,
+                let selected = self.didSelectProfile else { return }
+            
+            if selected {
+              
+                guard let imageData =  image.pngData() else { return }
+                dataStore.putData(imageData, metadata: nil) { metadata, error in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                        return
+                    }
+                    print("metadata: ", metadata)
+                
+                    dataStore.downloadURL() { url, error in
+                        
+                        let values = ["name": username, "email": email, "avatarUrl": (url?.absoluteString as! String)] as [String: Any]
+                       
+                                print("Register")
+                                let database = Database.database().reference()
+                                let userReference = database.child("users").child(uid)
 
-            let database = Database.database().reference()
-            let userReference = database.child("users").child(uid)
-            let values = ["name": username, "email": email]
-            userReference.updateChildValues(values){ error, database in
-
-                if error != nil {
-                    print(error)
-                    return
-                }
-                print("Registered User Succesfully")
-                let home = RecentMessagesVC()
-                strongSelf.navigationController?.pushViewController(home, animated: true)
+                                   userReference.updateChildValues(values) { error, database in
+                                   if error != nil {
+                                       print(error)
+                                       return
+                                   }
+                                   
+                                    let home = RecentMessagesVC()
+                                    self.navigationController?.pushViewController(home, animated: true)
+                    
+                    
+                                    }
+                           }
+                    }
+            } else {
+                print("Display alert to user ")
+                return
             }
+        
+         
         }
+    }
+    
+    private func registerUser(uid: String, userInfo: [String: Any]) {
+        
+        print("CALL REGISTER")
+        let database = Database.database().reference()
+        let userReference = database.child("users").child(uid)
+
+            userReference.updateChildValues(userInfo) { error, database in
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            print("Registered User Succesfully")
+        }
+           
     }
    
     @objc func handleToggle(_ sender: Any){
@@ -317,25 +364,29 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
        }
        
        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath)
+         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath)
          as? AvatarCell
-    
-       
+        
+        didSelectProfile = false
         cell?.avatar = avatars[indexPath.row]
         return cell!
        }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        avatar = avatars[indexPath.row]
-        print(avatar)
-        let collectoionCell = collectionView.cellForItem(at: indexPath)
+  
+        
+        let collectoionCell = collectionView.cellForItem(at: indexPath) as? AvatarCell
         guard let cell = collectoionCell else { return }
+
         if cell.isSelected {
             print("im selected")
             cell.contentView.layer.borderWidth = 3
             cell.contentView.layer.borderColor = UIColor.systemBlue.cgColor
+            guard let image = cell.avatarImageView?.image else { return }
+            avatarImage = image
+            avatar = avatars[indexPath.row]
+            didSelectProfile = true
         }
-        
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

@@ -17,7 +17,6 @@ class AvatarCell: UICollectionViewCell {
     var avatar: String? {
         didSet {
         
-            print("avatar: ", avatar)
             guard let avatar = avatar else { return }
             contentView.layoutMargins = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
             contentView.rounded(roundedView: contentView, toDiameter: 20)

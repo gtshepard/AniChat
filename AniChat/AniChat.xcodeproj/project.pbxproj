@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		851458C0237E6DC200FD3212 /* ChatClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851458BF237E6DC200FD3212 /* ChatClient.swift */; };
 		85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D103237DB433003F77A9 /* AppDelegate.swift */; };
 		85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D105237DB433003F77A9 /* SceneDelegate.swift */; };
 		85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D107237DB433003F77A9 /* LoginVC.swift */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		137F997638EB4331011ED339 /* Pods-AniChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.debug.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.debug.xcconfig"; sourceTree = "<group>"; };
 		679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AniChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		851458BF237E6DC200FD3212 /* ChatClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatClient.swift; sourceTree = "<group>"; };
 		85A0D100237DB433003F77A9 /* AniChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AniChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A0D103237DB433003F77A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85A0D105237DB433003F77A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 		85A0D12E237DEEAB003F77A9 /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				851458BF237E6DC200FD3212 /* ChatClient.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */,
 				85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */,
 				85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */,
+				851458C0237E6DC200FD3212 /* ChatClient.swift in Sources */,
 				85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */,
 				85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */,
 				85A0D13B237E29FE003F77A9 /* AvatarCell.swift in Sources */,

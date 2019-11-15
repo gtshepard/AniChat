@@ -33,12 +33,30 @@ class ContactCell: UITableViewCell {
         return imageView
     }()
     
+    var chatClient: ChatClient = ChatClient()
     var contact: User?{
         didSet{
+            
             guard let contact = contact  else { return }
-            profileImageView.image = UIImage(imageLiteralResourceName: "001-panda bear")
+            chatClient.requestAvatar(user: contact)
+    
             nameLabel.text = contact.name!
             emailLabel.text = contact.email!
+            
+            let session = URLSession.shared
+            var task = session.dataTask(with: contact.avatar!) {[weak self]data, response, error in
+                guard let strongSelf = self else { return }
+                DispatchQueue.main.async {
+                    strongSelf.profileImageView.image = UIImage(data: data!)
+                }
+            }
+                   
+            
+                   task.resume()
+       
+            
+            
+            
         }
     }
 
