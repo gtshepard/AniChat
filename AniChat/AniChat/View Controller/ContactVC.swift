@@ -22,11 +22,10 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var client: ChatClient = ChatClient()
     override func viewDidLoad() {
         super.viewDidLoad()
-     
         navigationItem.title = "Contacts"
+        
         observeContacts()
         view.addSubview(contactTV)
-        contactTV.reloadData()
         
         let tableContraints = [
             contactTV.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -39,27 +38,6 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         contactTV.delegate = self
         contactTV.dataSource = self
         contactTV.register(ContactCell.self, forCellReuseIdentifier: "ID")
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
-    func fetchContacts() {
-        Database.database().reference().child("users").observe(.childAdded){ [weak self] snapshot in
-            guard let strongSelf = self else { return }
-            if let user = snapshot.value as? [String: Any] {
-                let contact = User()
-                contact.id = snapshot.key
-                contact.name = (user["name"] as! String)
-                contact.email = (user["email"] as! String)
-                contact.avatar = URL(string: (user["avatarUrl"] as! String))
-                if snapshot.key != Auth.auth().currentUser?.uid {
-                    strongSelf.contacts.append(contact)
-                    strongSelf.contactTV.reloadData()
-                }
-            }
-        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -85,6 +63,6 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             inbox.contact = strongSelf.contacts[indexPath.row]
             inbox.tableView.reloadData()
             strongSelf.recentMessagesVC!.navigationController?.pushViewController(inbox, animated: true)
-            }
         }
+    }
 }
