@@ -67,21 +67,21 @@ class LoginClient {
             guard let strongSelf = self else { return }
             dataPath.downloadURL() { url, error in
                 guard NoError.errorless(error).errorless else { return }
-                print("URL: ", url!)
-                strongSelf.register(name: name, email: email, password: password) {
+                guard let avatarUrl = url else { return }
+                print("URL: ", avatarUrl)
+                strongSelf.register(name: name, email: email, password: password, avatarUrl: avatarUrl) {
                     completion()
                 }
             }
-            
         }
     }
     
-    func register(name: String, email: String, password: String, complete: @escaping ()-> Void) {
+    func register(name: String, email: String, password: String,avatarUrl: URL, complete: @escaping ()-> Void) {
         
         Account.reference.createUser(withEmail: email , password: password) { authResult, error in
             
             guard NoError.errorless(error).errorless else { return }
-            let userInfo = ["name": name, "email": email] as [String: Any]
+            let userInfo = ["name": name, "email": email, "avatarUrl": (avatarUrl.absoluteString as String)] as [String: Any]
             guard let myUid = Account.myUid else { return }
            
             let user = DatabasePath.user(myUid).user.updateChildValues(userInfo) { error, _ in

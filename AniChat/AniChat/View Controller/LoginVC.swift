@@ -280,6 +280,8 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             let home = RecentMessagesVC()
             strongSelf.navigationController?.pushViewController(home, animated: true)
         }
+        
+        
     }
     @objc func handleRegister() {
         
