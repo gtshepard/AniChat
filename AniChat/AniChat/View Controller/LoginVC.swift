@@ -275,7 +275,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
              
-        loginClient.register(name: username, email: email, password: password) { [weak self] in
+        loginClient.registerWithPhoto(name: username, email: email, password: password, avatar: "050-kangaroo") { [weak self] in
             guard let strongSelf = self else { return }
             let home = RecentMessagesVC()
             strongSelf.navigationController?.pushViewController(home, animated: true)

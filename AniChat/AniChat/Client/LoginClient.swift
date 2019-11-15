@@ -43,7 +43,40 @@ class LoginClient {
         //case register(User)
     }
     
-    func register(name: String, email: String, password: String, completion: @escaping ()-> Void) {
+    
+    enum DataStore {
+        static let reference = Storage.storage().reference()
+        case uploadPhoto(String)
+        
+        
+        var photo: StorageReference {
+            switch self {
+            case .uploadPhoto(let photoName):
+                return DataStore.reference.child(photoName)
+           
+            }
+        }
+    }
+    
+    func registerWithPhoto(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void){
+        let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
+        let dataPath = DataStore.uploadPhoto(avatar).photo
+      
+        dataPath.putData(imageData, metadata: nil) { [weak self] _, error in
+            guard NoError.errorless(error).errorless else { return }
+            guard let strongSelf = self else { return }
+            dataPath.downloadURL() { url, error in
+                guard NoError.errorless(error).errorless else { return }
+                print("URL: ", url!)
+                strongSelf.register(name: name, email: email, password: password) {
+                    completion()
+                }
+            }
+            
+        }
+    }
+    
+    func register(name: String, email: String, password: String, complete: @escaping ()-> Void) {
         
         Account.reference.createUser(withEmail: email , password: password) { authResult, error in
             
@@ -53,7 +86,7 @@ class LoginClient {
            
             let user = DatabasePath.user(myUid).user.updateChildValues(userInfo) { error, _ in
                 guard NoError.errorless(error).errorless else { return }
-                completion()
+                complete()
             }
         }
     }
