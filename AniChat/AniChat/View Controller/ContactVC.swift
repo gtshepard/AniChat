@@ -24,11 +24,7 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
      
         navigationItem.title = "Contacts"
-        client.fetchContacts() {[weak self] user in
-            guard let strongSelf = self else { return }
-            strongSelf.contacts.append(user)
-            strongSelf.contactTV.reloadData()
-        }
+        observeContacts()
         view.addSubview(contactTV)
         contactTV.reloadData()
         

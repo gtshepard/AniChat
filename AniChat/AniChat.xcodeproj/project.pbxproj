@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		851458C0237E6DC200FD3212 /* ChatClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851458BF237E6DC200FD3212 /* ChatClient.swift */; };
+		8564FA61237F326F00EE4BC7 /* ChatClient+ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */; };
 		85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D103237DB433003F77A9 /* AppDelegate.swift */; };
 		85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D105237DB433003F77A9 /* SceneDelegate.swift */; };
 		85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D107237DB433003F77A9 /* LoginVC.swift */; };
@@ -34,6 +35,7 @@
 		137F997638EB4331011ED339 /* Pods-AniChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.debug.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.debug.xcconfig"; sourceTree = "<group>"; };
 		679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AniChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		851458BF237E6DC200FD3212 /* ChatClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatClient.swift; sourceTree = "<group>"; };
+		8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatClient+ContactVC.swift"; sourceTree = "<group>"; };
 		85A0D100237DB433003F77A9 /* AniChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AniChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A0D103237DB433003F77A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85A0D105237DB433003F77A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				85A0D134237E08A0003F77A9 /* Ext+UIView.swift */,
 				85A0D136237E0A50003F77A9 /* Ext+Date.swift */,
 				85A0D138237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift */,
+				8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */,
 				85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */,
 				85A0D13B237E29FE003F77A9 /* AvatarCell.swift in Sources */,
+				8564FA61237F326F00EE4BC7 /* ChatClient+ContactVC.swift in Sources */,
 				85A0D127237DEA0A003F77A9 /* User.swift in Sources */,
 				85A0D139237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift in Sources */,
 				85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */,

@@ -13,9 +13,10 @@ class ChatClient {
     
     enum DatabasePaths {
         static let database = Database.database().reference()
-        static let users = DatabasePaths.database.child("users")
-//        case user(let uid)
-//        case message
+        static let users = database.child("users")
+        static let myUid = Auth.auth().currentUser?.uid
+        //case user(let uid)
+        //case message
     }
      
     func fetchContacts(result: @escaping (User)->Void) {
@@ -33,7 +34,21 @@ class ChatClient {
                 result(user)
             }
           }
-        
       }
-  }
+    }
+    
+    func contactObserver(result: @escaping (User)->Void) {
+        DatabasePaths.users.observe(.childAdded) { snapshot in
+            if snapshot.key != DatabasePaths.myUid {
+                if let userInfo = snapshot.value as? [String: Any] {
+                    let user = User()
+                    user.id = snapshot.key
+                    user.name = (userInfo["name"] as! String)
+                    user.email = (userInfo["email"] as! String)
+                    user.avatar = URL(string: (userInfo["avatarUrl"] as! String))
+                    result(user)
+                }
+            }
+        }
+    }
 }
