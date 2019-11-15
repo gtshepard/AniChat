@@ -24,6 +24,7 @@ class MessageCell: UITableViewCell {
     var avatarTrailingConstraint: NSLayoutConstraint!
     var user: String?
     var recipient: String?
+    var contact: User?
     
     var message: Message? {
         didSet {
@@ -61,11 +62,30 @@ class MessageCell: UITableViewCell {
                     avatarImageView!.translatesAutoresizingMaskIntoConstraints = false
                     avatarImageView!.backgroundColor = .lightGray
             
-                    if !message.incoming! {
-                        avatarImageView!.image = UIImage(imageLiteralResourceName: "028-walrus")
-                    } else {
-                         avatarImageView!.image = UIImage(imageLiteralResourceName: "032-cow")
+            
+              if !message.incoming! {
+                
+                    let session = URLSession.shared
+                    var task = session.dataTask(with: contact!.avatar!) { [weak self] data, response, error in
+                        guard let strongSelf = self else { return }
+                        DispatchQueue.main.async {
+                            strongSelf.avatarImageView!.image = UIImage(data: data!)
+                        }
                     }
+                    task.resume()
+                  
+                    } else {
+                       
+                        let session = URLSession.shared
+                        var task = session.dataTask(with: contact!.avatar!) { [weak self] data, response, error in
+                        guard let strongSelf = self else { return }
+                            DispatchQueue.main.async {
+                                    strongSelf.avatarImageView!.image = UIImage(data: data!)
+                            }
+                         }
+                        task.resume()
+                    }
+            
                     avatarImageView!.clipsToBounds = true
                     //avatarImageView!.setRoundedView(roundedView: avatarImageView!, toDiameter: 30.0)
                     addSubview(avatarImageView!)

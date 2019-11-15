@@ -229,6 +229,7 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                 }
+               cell?.contact = contact
                cell?.message = messages[indexPath.row]
             return cell!
         }

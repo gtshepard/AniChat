@@ -19,12 +19,16 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var recentMessagesVC: RecentMessagesVC?
     var contacts :[User] = []
-
+    var client: ChatClient = ChatClient()
     override func viewDidLoad() {
         super.viewDidLoad()
      
         navigationItem.title = "Contacts"
-        fetchContacts()
+        client.fetchContacts() {[weak self] user in
+            guard let strongSelf = self else { return }
+            strongSelf.contacts.append(user)
+            strongSelf.contactTV.reloadData()
+        }
         view.addSubview(contactTV)
         contactTV.reloadData()
         
