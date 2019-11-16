@@ -58,7 +58,7 @@ class LoginClient {
         }
     }
     
-    func registerWithPhoto(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void){
+    func register(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void){
         let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
         let dataPath = DataStore.uploadPhoto(avatar).photo
       
@@ -88,6 +88,16 @@ class LoginClient {
                 guard NoError.errorless(error).errorless else { return }
                 complete()
             }
+        }
+    }
+    
+    func login(email: String, password: String, completion: @escaping (String?)->Void) {
+        Account.reference.signIn(withEmail: email, password: password) { result, error in
+            if error != nil {
+                completion(error?.localizedDescription)
+                return
+            }
+            completion(nil)
         }
     }
 }

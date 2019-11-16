@@ -40,6 +40,8 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             return button
         }()
         var contact: User?
+        var chat: ChatClient = ChatClient()
+    
         override func viewDidLoad() {
             
             super.viewDidLoad()
@@ -58,50 +60,10 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             //listen for keyboard events
             NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifications), name: UIResponder.keyboardWillShowNotification , object: nil)
             
-              observeMessages()
+             // observeMessages()
+             observeMessages()
         }
-        
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-       
-    }
-        func observeMessages(){
-            let dbPath = Database.database().reference().child("messages")
-            dbPath.observe(.childAdded, with: { [weak self] snapshot in
-              
-                guard let strongSelf = self else { return }
-                if let dictonary = snapshot.value as? [String: Any] {
-                      let message = Message()
-                      message.toId = dictonary["toId"] as! String
-                      message.fromId = dictonary["fromId"] as! String
-                      message.text = dictonary["text"] as! String
-          
-                     let date = dictonary["date"] as! NSNumber
-                     
-                    
-                      if message.toId == Auth.auth().currentUser?.uid {
-                        message.incoming = true
-                      } else {
-                        message.incoming = false
-                      }
-            
-                      strongSelf.messages.append(message)
-                      strongSelf.tableView.reloadData()
-                }
-                
-                guard strongSelf.messages.count < 2 else { return }
-                               //index for last item in table view
-                let indexPath = IndexPath(row:  strongSelf.messages.count-1, section: 0)
-                let insets = UIEdgeInsets(top: 0, left: 0, bottom: (strongSelf.keyboardHeight ?? strongSelf.sendBarContainer.frame.size.height) + 40 , right: 0)
-                                          //push last element in table view above keyboard
-                strongSelf.tableView.contentInset = insets
-                strongSelf.tableView.scrollIndicatorInsets = insets
-                strongSelf.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                strongSelf.tableView.reloadData()
-                
-            })
-        }
-        
+    
         func sendMessage(text: String) {
              let message = Message()
              message.toId = contact!.id!
@@ -123,7 +85,6 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             let values = ["toId": message.toId!, "fromId": message.fromId!, "date": date.timeIntervalSince1970 as! NSNumber , "text": message.text!] as [String : Any]
             childNode.updateChildValues(values)
         }
-        
         
         @objc func handleSendButtonTap() {
             if let msg = sendBarTF.text, !msg.isEmpty {

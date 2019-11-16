@@ -12,7 +12,7 @@ import UIKit
 extension ContactVC {
     
     func observeContacts(){
-        client.contactObserver() { [weak self] user in
+        chat.contactObserver() { [weak self] user in
             guard let strongSelf = self else { return }
             strongSelf.contacts.append(user)
             strongSelf.contactTV.reloadData()

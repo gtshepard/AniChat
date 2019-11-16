@@ -19,7 +19,7 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var recentMessagesVC: RecentMessagesVC?
     var contacts :[User] = []
-    var client: ChatClient = ChatClient()
+    var chat: ChatClient = ChatClient()
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Contacts"
