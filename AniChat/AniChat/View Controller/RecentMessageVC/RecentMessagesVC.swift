@@ -18,7 +18,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }()
 
     var messages :[Int] = []
-
+    var chat: LoginClient = LoginClient()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(recentMessageTV)
@@ -55,6 +55,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     @objc func logout() {
+        chat.logout()
         navigationController?.popViewController(animated: true)
     }
     

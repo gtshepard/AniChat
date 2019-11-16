@@ -100,4 +100,7 @@ class LoginClient {
             completion(nil)
         }
     }
+    func logout() {
+        try! Account.reference.signOut()
+    }
 }

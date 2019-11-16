@@ -60,35 +60,12 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             //listen for keyboard events
             NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifications), name: UIResponder.keyboardWillShowNotification , object: nil)
             
-             // observeMessages()
              observeMessages()
         }
-    
-        func sendMessage(text: String) {
-             let message = Message()
-             message.toId = contact!.id!
-             message.fromId = Auth.auth().currentUser?.uid
-             message.date = Date()
-             message.text = text
-             message.incoming = false
-             message.useProfile = true
-             realTimeSend(message: message)
-             sendBarTF.text = ""
-        }
-        
-        func realTimeSend(message: Message) {
-            
-            var fromid = Auth.auth().currentUser?.uid
-            var database = Database.database().reference().child("messages")
-            var childNode = database.childByAutoId()
-            let date = Date()
-            let values = ["toId": message.toId!, "fromId": message.fromId!, "date": date.timeIntervalSince1970 as! NSNumber , "text": message.text!] as [String : Any]
-            childNode.updateChildValues(values)
-        }
-        
+ 
         @objc func handleSendButtonTap() {
             if let msg = sendBarTF.text, !msg.isEmpty {
-                 sendMessage(text: msg)
+                send(text: msg)
             }
         }
         
