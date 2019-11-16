@@ -58,7 +58,8 @@ class LoginClient {
         }
     }
     
-    func register(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void){
+    func register(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void) {
+        
         let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
         let dataPath = DataStore.uploadPhoto(avatar).photo
       

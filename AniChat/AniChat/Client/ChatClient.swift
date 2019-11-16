@@ -16,11 +16,14 @@ class ChatClient {
         static let reference = Database.database().reference()
         static let users = DatabasePath.reference.child("users")
         static let messages = DatabasePath.reference.child("messages")
-     
         
-        
-        
-       
+        case user(String)
+        var user: DatabaseReference {
+            switch self {
+            case .user(let uid):
+                return DatabasePath.users.child(uid)
+            }
+        }
     }
     enum MessageMaker {
         static let maker = DatabasePath.messages.childByAutoId()
@@ -67,6 +70,24 @@ class ChatClient {
                 message.date = Date.init(timeIntervalSince1970: TimeInterval(truncating: date))
                 message.incoming = message.toId == Account.myUid ? true : false
                 result(message)
+            }
+        }
+    }
+    
+    func messageForUser(results: @escaping ([String: Any])->Void){
+        messageObserver() { message in
+            var user = DatabasePath.user(message.toId!).user
+            user.observeSingleEvent(of: .value) { snapshot in
+                if let userInfo = snapshot.value as? [String: Any] {
+                    var result: [String: Any]
+                    result = userInfo
+                    result["toId"] = (message.toId as! String)
+                    result["fromId"] = (message.fromId as! String)
+                    result["text"] = (message.text as! String)
+                    result["date"] = (message.date as! Date)
+                    result["incoming"] = (message.toId == Account.myUid ? true : false)
+                    results(result)
+                }
             }
         }
     }

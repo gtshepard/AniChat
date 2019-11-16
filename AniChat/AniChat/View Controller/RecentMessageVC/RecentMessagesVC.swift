@@ -17,12 +17,12 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         return tableView
     }()
 
-    var messages :[Int] = []
-    var chat: LoginClient = LoginClient()
+    var messages :[Message] = []
+    var login: LoginClient = LoginClient()
+    var chat: ChatClient = ChatClient()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(recentMessageTV)
-        fetchMessages()
         recentMessageTV.reloadData()
         
         let recentMessagesConstraints = [
@@ -52,10 +52,15 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        chat.messageObserver(){ [weak self] message in
+            guard let strongSelf = self else { return }
+            strongSelf.messages.append(message)
+        }
+         recentMessageTV.reloadData()
     }
 
     @objc func logout() {
-        chat.logout()
+        login.logout()
         navigationController?.popViewController(animated: true)
     }
     
@@ -67,9 +72,9 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
     
     func fetchMessages() {
-        Database.database().reference().child("users").observe(.childAdded){ snapshot in
+        Database.database().reference().child("users").observe(.childAdded) { snapshot in
             if let user = snapshot.value as? [String: Any] {
-              //append to table view data source 
+              //append to table view data source
             }
         }
     }
@@ -86,7 +91,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ID", for: indexPath) as? RecentMessageCell
 
-        //cell?.friend = friends[indexPath.row]
+        cell?.message = messages[indexPath.row]
         return cell!
     }
 

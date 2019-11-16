@@ -25,7 +25,7 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         navigationItem.title = "Contacts"
 
         view.addSubview(contactTV)
-        
+        observeContacts()
         let tableContraints = [
             contactTV.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contactTV.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -39,10 +39,7 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         contactTV.register(ContactCell.self, forCellReuseIdentifier: "ID")
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        observeContacts()
-    }
+   
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count

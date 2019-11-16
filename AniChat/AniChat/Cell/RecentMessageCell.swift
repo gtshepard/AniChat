@@ -48,15 +48,46 @@ class RecentMessageCell: UITableViewCell {
             //imageView.setRoundedView(roundedView: imageView, toDiameter: 30)
             return imageView
         }()
-         
+    var chat: ChatClient = ChatClient()
         var message:Message?{
             didSet{
-//                guard let friend = friend else { return }
-//                profileImageView.image = UIImage(imageLiteralResourceName: "015-whale")
-//                nameLabel.text = friend.name!
-//                timeLabel.text = Date.twelveHourTimeString(date: Date())
-//                dateLabel.text = Date.monthDayYear(date: Date())
-//                mostRecentMessageLabel.text = friend.email!
+//                chat.messageForUser(){ [weak self] results in
+//                    guard let strongSelf = self else { return }
+//                    strongSelf.nameLabel.text = (results["name"] as! String)
+//                    let date = ((Date.time((results["date"] as! Date))) as! String)
+//                    strongSelf.dateLabel.text = date
+//                    let imageUrl = (results["avatarUrl"] as! URL)
+//
+//                    let session = URLSession.shared
+//                    var task = session.dataTask(with: imageUrl) { data, response, error in
+//                        DispatchQueue.main.async {
+//                                strongSelf.profileImageView.image = UIImage(data: data!)
+//                            }
+//                    }
+//                    task.resume()
+//                }
+                if let toId =  message?.toId {
+                    let ref = Database.database().reference().child("users").child(toId)
+                    ref.observeSingleEvent(of: .value) { [weak self] snapshot in
+                        guard let strongSelf = self else { return }
+                        if let dictionary = snapshot.value as? [String: Any] {
+                            let date = strongSelf.message!.date!
+                            strongSelf.nameLabel.text = (dictionary["name"] as! String)
+                            strongSelf.dateLabel.text = Date.time(by: date)
+                            strongSelf.messageLabel.text = strongSelf.message!.text
+                             let imageStr = (dictionary["avatarUrl"] as! String)
+                             let imageUrl = URL(string: imageStr)!
+                             let session = URLSession.shared
+                             var task = session.dataTask(with: imageUrl) { data, response, error in
+                                DispatchQueue.main.async {
+                                    strongSelf.profileImageView.image = UIImage(data: data!)
+                                }
+                              }
+                            task.resume()
+                        }
+                    }
+                }
+                
             }
         }
 
