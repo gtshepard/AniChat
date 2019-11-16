@@ -30,6 +30,8 @@ extension InboxVC {
     
     func send(text: String){
         guard let contact = self.contact else { return }
-        chat.send(text: text , recipient: contact)
+        chat.send(text: text , recipient: contact) { [weak self] message in
+            guard let strongSelf = self else { return }
+        }
     }
 }

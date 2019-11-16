@@ -66,14 +66,15 @@ class RecentMessageCell: UITableViewCell {
 //                    }
 //                    task.resume()
 //                }
-                if let toId =  message?.toId {
-                    let ref = Database.database().reference().child("users").child(toId)
+                if let fromId =  message?.fromId {
+                    let ref = Database.database().reference().child("users").child(fromId)
                     ref.observeSingleEvent(of: .value) { [weak self] snapshot in
                         guard let strongSelf = self else { return }
                         if let dictionary = snapshot.value as? [String: Any] {
                             let date = strongSelf.message!.date!
                             strongSelf.nameLabel.text = (dictionary["name"] as! String)
-                            strongSelf.dateLabel.text = Date.time(by: date)
+                            strongSelf.timeLabel.text = Date.time(by: date)
+                            strongSelf.dateLabel.text = Date.monthDayYear(by: date)
                             strongSelf.messageLabel.text = strongSelf.message!.text
                              let imageStr = (dictionary["avatarUrl"] as! String)
                              let imageUrl = URL(string: imageStr)!

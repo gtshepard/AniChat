@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 class LoginClient {
-    
+   
     enum DatabasePath {
         static let reference = Database.database().reference()
         static let users = reference.child("users")
@@ -101,7 +101,8 @@ class LoginClient {
             completion(nil)
         }
     }
-    func logout() {
+    func logout(completion: @escaping ()->Void) {
         try! Account.reference.signOut()
+        completion()
     }
 }

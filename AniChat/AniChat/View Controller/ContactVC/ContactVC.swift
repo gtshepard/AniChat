@@ -37,10 +37,14 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         contactTV.delegate = self
         contactTV.dataSource = self
         contactTV.register(ContactCell.self, forCellReuseIdentifier: "ID")
+        
+    }
+    //TODO: fix bug, logout and login on same device loads same uuser data
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        contactTV.reloadData()
     }
 
-   
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }

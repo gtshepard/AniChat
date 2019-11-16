@@ -48,20 +48,30 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: newMessageImage, style: .plain, target: self, action: #selector(showContacts))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
+        
         chat.messageObserver(){ [weak self] message in
-            guard let strongSelf = self else { return }
-            strongSelf.messages.append(message)
-        }
-         recentMessageTV.reloadData()
+                 guard let strongSelf = self else { return }
+                 strongSelf.messages.append(message)
+                 strongSelf.recentMessageTV.reloadData()
+             }
     }
-
+    
     @objc func logout() {
-        login.logout()
-        navigationController?.popViewController(animated: true)
+        login.logout() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.navigationController?.popViewController(animated: true)
+        }
+//          let auth = Auth.auth()
+//        do {
+//            try auth.signOut()
+//            DispatchQueue.main.async { [weak self] in
+//              guard let strongSelf = self else { return }
+//                strongSelf.navigationController?.popViewController(animated: true)
+//            }
+//        } catch let signOutError as NSError {
+//          print ("Error signing out: %@", signOutError)
+//        }
     }
     
     @objc func showContacts(){

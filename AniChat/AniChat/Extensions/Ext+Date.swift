@@ -11,7 +11,12 @@ extension Date {
     
     static func time(by date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm a"
+        formatter.dateFormat = "h:mm a"
+        return formatter.string(from: date)
+    }
+    static func monthDayYear(by date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
         return formatter.string(from: date)
     }
 }

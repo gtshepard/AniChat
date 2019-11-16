@@ -13,9 +13,9 @@ import Firebase
 class ChatClient {
     
     enum DatabasePath {
-        static let reference = Database.database().reference()
-        static let users = DatabasePath.reference.child("users")
-        static let messages = DatabasePath.reference.child("messages")
+        static var reference = Database.database().reference()
+        static var users = DatabasePath.reference.child("users")
+        static var messages = DatabasePath.reference.child("messages")
         
         case user(String)
         var user: DatabaseReference {
@@ -62,7 +62,7 @@ class ChatClient {
     func messageObserver(result: @escaping (Message)->Void) {
         DatabasePath.messages.observe(.childAdded) { snapshot in
             if let dictonary = snapshot.value as? [String: Any] {
-                let date = dictonary["date"] as! NSNumber
+                let date = (dictonary["date"] as! NSNumber)
                 let message = Message()
                 message.toId = dictonary["toId"] as! String
                 message.fromId = dictonary["fromId"] as! String
@@ -92,9 +92,16 @@ class ChatClient {
         }
     }
     
-    func send(text: String, recipient: User){
+    func send(text: String, recipient: User, result: @escaping (Message)->Void){
         let date = Date()
-        let messageInfo = ["toId": recipient.id, "fromId": Account.myUid, "date": date.timeIntervalSince1970 as! NSNumber , "text": text] as [String : Any]
+        let messageInfo = ["toId": recipient.id, "fromId": Account.myUid, "date": (date.timeIntervalSince1970 as! NSNumber), "text": text] as [String : Any]
         MessageMaker.make(messageInfo).message
+        let message = Message()
+        message.toId = recipient.id
+        message.fromId = Account.myUid
+        message.date = date
+        message.text = text
+        message.incoming = message.toId == Account.myUid ? true: false
+        result(message)
     }
 }

@@ -31,12 +31,13 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             return textField
         }()
         
-        let sendButton: UIButton = {
+       lazy var sendButton: UIButton = {
             let button = UIButton()
             button.setTitle("Send", for: .normal)
             let color = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha:1)
             button.setTitleColor(color, for: .normal)
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+            button.addTarget(self, action: #selector(handleSendButtonTap), for: .touchUpInside)
             return button
         }()
         var contact: User?
@@ -66,6 +67,9 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
         @objc func handleSendButtonTap() {
             if let msg = sendBarTF.text, !msg.isEmpty {
                 send(text: msg)
+                sendBarTF.text = ""
+            } else {
+                print("no send send")
             }
         }
         
@@ -125,7 +129,7 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             sendBarContainer.addSubview(sendBarTF)
             sendBarContainer.addSubview(sendButton)
             sendBarContainer.addSubview(topBorderView)
-            sendButton.addTarget(self, action: #selector(handleSendButtonTap), for: .touchUpInside)
+           
             
             sendBarContainer.addConstraintsWithFormat("H:|-8-[v0][v1(60)]|", views: sendBarTF, sendButton)
             sendBarContainer.addConstraintsWithFormat("V:|-8-[v0]|", views: sendBarTF)
