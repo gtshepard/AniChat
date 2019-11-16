@@ -10,6 +10,10 @@
 		851458C0237E6DC200FD3212 /* ChatClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851458BF237E6DC200FD3212 /* ChatClient.swift */; };
 		8564FA61237F326F00EE4BC7 /* ChatClient+ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */; };
 		8564FA63237F350100EE4BC7 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA62237F350100EE4BC7 /* LoginClient.swift */; };
+		8564FA65237F579600EE4BC7 /* Alert+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA64237F579600EE4BC7 /* Alert+UIViewController.swift */; };
+		8564FA67237F61BE00EE4BC7 /* LoginClient+LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA66237F61BE00EE4BC7 /* LoginClient+LoginVC.swift */; };
+		8564FA6B237F62D600EE4BC7 /* Alert+LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA6A237F62D600EE4BC7 /* Alert+LoginVC.swift */; };
+		8564FA76237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA75237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift */; };
 		85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D103237DB433003F77A9 /* AppDelegate.swift */; };
 		85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D105237DB433003F77A9 /* SceneDelegate.swift */; };
 		85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D107237DB433003F77A9 /* LoginVC.swift */; };
@@ -27,7 +31,6 @@
 		85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D131237E073C003F77A9 /* MessageCell.swift */; };
 		85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D134237E08A0003F77A9 /* Ext+UIView.swift */; };
 		85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D136237E0A50003F77A9 /* Ext+Date.swift */; };
-		85A0D139237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D138237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift */; };
 		85A0D13B237E29FE003F77A9 /* AvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D13A237E29FE003F77A9 /* AvatarCell.swift */; };
 		C67DFCD66CA5354C299BD290 /* Pods_AniChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */; };
 /* End PBXBuildFile section */
@@ -38,6 +41,10 @@
 		851458BF237E6DC200FD3212 /* ChatClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatClient.swift; sourceTree = "<group>"; };
 		8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatClient+ContactVC.swift"; sourceTree = "<group>"; };
 		8564FA62237F350100EE4BC7 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
+		8564FA64237F579600EE4BC7 /* Alert+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+UIViewController.swift"; sourceTree = "<group>"; };
+		8564FA66237F61BE00EE4BC7 /* LoginClient+LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginClient+LoginVC.swift"; sourceTree = "<group>"; };
+		8564FA6A237F62D600EE4BC7 /* Alert+LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+LoginVC.swift"; sourceTree = "<group>"; };
+		8564FA75237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatClient+InboxVC.swift"; sourceTree = "<group>"; };
 		85A0D100237DB433003F77A9 /* AniChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AniChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A0D103237DB433003F77A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85A0D105237DB433003F77A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,7 +64,6 @@
 		85A0D131237E073C003F77A9 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		85A0D134237E08A0003F77A9 /* Ext+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
 		85A0D136237E0A50003F77A9 /* Ext+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Date.swift"; sourceTree = "<group>"; };
-		85A0D138237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginVC+AvatarCollectionView.swift"; sourceTree = "<group>"; };
 		85A0D13A237E29FE003F77A9 /* AvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCell.swift; sourceTree = "<group>"; };
 		C72418BFE6B295D0AB9B6B86 /* Pods-AniChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.release.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +87,74 @@
 				C72418BFE6B295D0AB9B6B86 /* Pods-AniChat.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		8564FA68237F620100EE4BC7 /* LoginVC+Ext */ = {
+			isa = PBXGroup;
+			children = (
+				8564FA66237F61BE00EE4BC7 /* LoginClient+LoginVC.swift */,
+				8564FA6A237F62D600EE4BC7 /* Alert+LoginVC.swift */,
+			);
+			path = "LoginVC+Ext";
+			sourceTree = "<group>";
+		};
+		8564FA69237F624300EE4BC7 /* LoginVC */ = {
+			isa = PBXGroup;
+			children = (
+				85A0D107237DB433003F77A9 /* LoginVC.swift */,
+				8564FA68237F620100EE4BC7 /* LoginVC+Ext */,
+			);
+			path = LoginVC;
+			sourceTree = "<group>";
+		};
+		8564FA6C237F6D7100EE4BC7 /* ContactVC */ = {
+			isa = PBXGroup;
+			children = (
+				8564FA6E237F6DE600EE4BC7 /* ContactVC+Ext */,
+				85A0D128237DEA56003F77A9 /* ContactVC.swift */,
+			);
+			path = ContactVC;
+			sourceTree = "<group>";
+		};
+		8564FA6E237F6DE600EE4BC7 /* ContactVC+Ext */ = {
+			isa = PBXGroup;
+			children = (
+				8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */,
+			);
+			path = "ContactVC+Ext";
+			sourceTree = "<group>";
+		};
+		8564FA71237F6E9400EE4BC7 /* InboxVC */ = {
+			isa = PBXGroup;
+			children = (
+				85A0D12F237E02F0003F77A9 /* InboxVC.swift */,
+				8564FA72237F6EA400EE4BC7 /* InboxVC+Ext */,
+			);
+			path = InboxVC;
+			sourceTree = "<group>";
+		};
+		8564FA72237F6EA400EE4BC7 /* InboxVC+Ext */ = {
+			isa = PBXGroup;
+			children = (
+				8564FA75237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift */,
+			);
+			path = "InboxVC+Ext";
+			sourceTree = "<group>";
+		};
+		8564FA73237F6EB800EE4BC7 /* RecentMessageVC */ = {
+			isa = PBXGroup;
+			children = (
+				85A0D11F237DE5F7003F77A9 /* RecentMessagesVC.swift */,
+				8564FA74237F6EC100EE4BC7 /* RecentMessageVC+Ext */,
+			);
+			path = RecentMessageVC;
+			sourceTree = "<group>";
+		};
+		8564FA74237F6EC100EE4BC7 /* RecentMessageVC+Ext */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "RecentMessageVC+Ext";
 			sourceTree = "<group>";
 		};
 		85A0D0F7237DB433003F77A9 = {
@@ -142,10 +216,10 @@
 		85A0D12C237DEE0F003F77A9 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				85A0D11F237DE5F7003F77A9 /* RecentMessagesVC.swift */,
-				85A0D107237DB433003F77A9 /* LoginVC.swift */,
-				85A0D128237DEA56003F77A9 /* ContactVC.swift */,
-				85A0D12F237E02F0003F77A9 /* InboxVC.swift */,
+				8564FA73237F6EB800EE4BC7 /* RecentMessageVC */,
+				8564FA71237F6E9400EE4BC7 /* InboxVC */,
+				8564FA6C237F6D7100EE4BC7 /* ContactVC */,
+				8564FA69237F624300EE4BC7 /* LoginVC */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -173,8 +247,7 @@
 			children = (
 				85A0D134237E08A0003F77A9 /* Ext+UIView.swift */,
 				85A0D136237E0A50003F77A9 /* Ext+Date.swift */,
-				85A0D138237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift */,
-				8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */,
+				8564FA64237F579600EE4BC7 /* Alert+UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -306,17 +379,20 @@
 				85A0D129237DEA56003F77A9 /* ContactVC.swift in Sources */,
 				85A0D122237DE88C003F77A9 /* RecentMessageCell.swift in Sources */,
 				85A0D10E237DB433003F77A9 /* AniChat.xcdatamodeld in Sources */,
+				8564FA76237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift in Sources */,
 				85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */,
 				85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */,
 				85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */,
 				85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */,
 				851458C0237E6DC200FD3212 /* ChatClient.swift in Sources */,
+				8564FA6B237F62D600EE4BC7 /* Alert+LoginVC.swift in Sources */,
 				85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */,
+				8564FA67237F61BE00EE4BC7 /* LoginClient+LoginVC.swift in Sources */,
 				85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */,
+				8564FA65237F579600EE4BC7 /* Alert+UIViewController.swift in Sources */,
 				85A0D13B237E29FE003F77A9 /* AvatarCell.swift in Sources */,
 				8564FA61237F326F00EE4BC7 /* ChatClient+ContactVC.swift in Sources */,
 				85A0D127237DEA0A003F77A9 /* User.swift in Sources */,
-				85A0D139237E24C4003F77A9 /* LoginVC+AvatarCollectionView.swift in Sources */,
 				85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */,
 				85A0D120237DE5F7003F77A9 /* RecentMessagesVC.swift in Sources */,
 				8564FA63237F350100EE4BC7 /* LoginClient.swift in Sources */,

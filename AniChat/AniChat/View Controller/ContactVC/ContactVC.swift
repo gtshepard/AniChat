@@ -19,12 +19,11 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var recentMessagesVC: RecentMessagesVC?
     var contacts :[User] = []
-    var client: ChatClient = ChatClient()
+    var chat: ChatClient = ChatClient()
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Contacts"
-        
-        observeContacts()
+
         view.addSubview(contactTV)
         
         let tableContraints = [
@@ -40,6 +39,11 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         contactTV.register(ContactCell.self, forCellReuseIdentifier: "ID")
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        observeContacts()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }

@@ -128,7 +128,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var avatar: String?
     var avatarImage: UIImage?
     var didSelectProfile: Bool?
-    
+    var loginClient: LoginClient = LoginClient()
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AniChat"
@@ -245,110 +245,8 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         setupLogo()
     }
 
-    @objc func loginOrRegister() {
-        if loginSegmentControl.selectedSegmentIndex == 0 {
-            handleLogin()
-        } else {
-            handleRegister()
-        }
-    }
+ 
     
-    @objc func handleLogin() {
-        guard let email = emailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
-
-        Auth.auth().signIn(withEmail: email, password: password) {[weak self] user, err in
-            
-            if err != nil {
-                print(err)
-                return
-            }
-            guard let strongSelf = self else { return }
-            print("Login for: ", email, " Successful")
-            let home = RecentMessagesVC()
-            strongSelf.navigationController?.pushViewController(home, animated: true)
-        }
-    }
-    
-    @objc func handleRegister() {
-        
-        guard let username = nameTextField.text else { return }
-        guard let email = emailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
-      
-
-        Auth.auth().createUser(withEmail: email, password: password)
-        { authResult, err in
-        
-            if err != nil {
-                print(err)
-                return
-            }
-            
-            guard let uid = Auth.auth().currentUser?.uid else { return }
-            print("Successfuly Authenticated User")
-      
-            let dataStore = Storage.storage().reference().child(self.avatar!)
-            guard let image = self.avatarImage,
-                let selected = self.didSelectProfile else { return }
-            
-            if selected {
-              
-                guard let imageData =  image.pngData() else { return }
-                dataStore.putData(imageData, metadata: nil) { metadata, error in
-                    if error != nil {
-                        print(error!.localizedDescription)
-                        return
-                    }
-                    print("metadata: ", metadata)
-                
-                    dataStore.downloadURL() { url, error in
-                        
-                        let values = ["name": username, "email": email, "avatarUrl": (url?.absoluteString as! String)] as [String: Any]
-                       
-                                print("Register")
-                                let database = Database.database().reference()
-                                let userReference = database.child("users").child(uid)
-
-                                   userReference.updateChildValues(values) { error, database in
-                                   if error != nil {
-                                       print(error)
-                                       return
-                                   }
-                                   
-                                    let home = RecentMessagesVC()
-                                    self.navigationController?.pushViewController(home, animated: true)
-                    
-                    
-                                    }
-                           }
-                    }
-            } else {
-                print("Display alert to user ")
-                return
-            }
-        
-         
-        }
-    }
-    
-    private func registerUser(uid: String, userInfo: [String: Any]) {
-        
-        print("CALL REGISTER")
-        let database = Database.database().reference()
-        let userReference = database.child("users").child(uid)
-
-            userReference.updateChildValues(userInfo) { error, database in
-            if error != nil {
-                print(error)
-                return
-            }
-            
-            print("Registered User Succesfully")
-        }
-           
-    }
-   
     func setupLogo() {
         view.addSubview(logoContainer)
         logoContainer.addSubview(logo)
@@ -444,8 +342,8 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             print("im selected")
             cell.contentView.layer.borderWidth = 3
             cell.contentView.layer.borderColor = UIColor.systemBlue.cgColor
-            guard let image = cell.avatarImageView?.image else { return }
-            avatarImage = image
+            //guard let image = cell.avatarImageView?.image else { return }
+            //avatarImage = image
             avatar = avatars[indexPath.row]
             didSelectProfile = true
         }
