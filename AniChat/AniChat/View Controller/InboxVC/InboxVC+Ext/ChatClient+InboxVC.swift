@@ -31,5 +31,6 @@ extension InboxVC {
     func send(text: String){
         guard let contact = self.contact else { return }
         chat.send(text: text , recipient: contact)
+        sendBarTF.text = ""
     }
 }
