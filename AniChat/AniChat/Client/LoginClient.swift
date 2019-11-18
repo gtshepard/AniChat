@@ -40,9 +40,7 @@ class LoginClient {
     enum Account {
         static let reference = Auth.auth()
         static let myUid = reference.currentUser?.uid
-        //case register(User)
     }
-    
     
     enum DataStore {
         static let reference = Storage.storage().reference()
@@ -58,7 +56,7 @@ class LoginClient {
         }
     }
     
-    func register(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void) {
+    func register(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void){
         
         let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
         let dataPath = DataStore.uploadPhoto(avatar).photo
@@ -101,6 +99,7 @@ class LoginClient {
             completion(nil)
         }
     }
+    
     func logout(completion: @escaping ()->Void) {
         try! Account.reference.signOut()
         completion()
