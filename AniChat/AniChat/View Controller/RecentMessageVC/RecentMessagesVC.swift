@@ -21,7 +21,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var messages :[Message] = []
     var login: LoginClient = LoginClient()
     var chat: ChatClient = ChatClient()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(recentMessageTV)

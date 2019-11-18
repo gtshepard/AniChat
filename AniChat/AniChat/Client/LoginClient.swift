@@ -10,21 +10,7 @@ import Foundation
 import Firebase
 
 class LoginClient {
-   
-//    enum DatabasePath {
-//        static let reference = Database.database().reference()
-//        static let users = reference.child("users")
-//
-//        case user(String)
-//
-//        var user: DatabaseReference {
-//            switch self {
-//            case .user(let uid):
-//                return DatabasePath.users.child(uid)
-//            }
-//        }
-//    }
-    
+       
     enum NoError {
         case errorless(Error?)
         var errorless: Bool {
@@ -37,30 +23,11 @@ class LoginClient {
         }
     }
     
-//    enum Account {
-//        static let reference = Auth.auth()
-//        static let myUid = reference.currentUser?.uid
-//    }
-    
-//    enum DataStore {
-//        static let reference = Storage.storage().reference()
-//        case uploadPhoto(String)
-//
-//        var photo: StorageReference {
-//            switch self {
-//            case .uploadPhoto(let photoName):
-//                return DataStore.reference.child(photoName)
-//
-//            }
-//        }
-//    }
-    
     func register(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void){
         
         let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
         let dataPath = Storage.storage().reference().child(avatar)
-        //let dataPath = DataStore.uploadPhoto(avatar).photo
-      
+    
         dataPath.putData(imageData, metadata: nil) { [weak self] _, error in
             guard NoError.errorless(error).errorless else { return }
             guard let strongSelf = self else { return }
