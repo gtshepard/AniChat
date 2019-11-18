@@ -49,7 +49,7 @@ class RecentMessageCell: UITableViewCell {
             return imageView
         }()
     
-    var chat: ChatClient = ChatClient()
+        var chat: ChatClient = ChatClient()
         var message:Message?{
             didSet{
 //                chat.messageForUser(){ [weak self] results in
@@ -67,8 +67,9 @@ class RecentMessageCell: UITableViewCell {
 //                    }
 //                    task.resume()
 //                }
-                if let fromId =  message?.fromId {
-                    let ref = Database.database().reference().child("users").child(fromId)
+                
+                if let toId = message?.toId {
+                    let ref = Database.database().reference().child("users").child(toId)
                     ref.observeSingleEvent(of: .value) { [weak self] snapshot in
                         guard let strongSelf = self else { return }
                         if let dictionary = snapshot.value as? [String: Any] {

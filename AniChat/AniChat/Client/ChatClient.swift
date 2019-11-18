@@ -49,17 +49,17 @@ class ChatClient {
     }
     
     func messageForUser(results: @escaping ([String: Any])->Void){
+        
         messageObserver() { message in
-            //var user = DatabasePath.user(message.toId!).user
             var user = Database.database().reference().child(NodeConstant.messages).child(message.toId!)
             user.observeSingleEvent(of: .value) { snapshot in
                 if let userInfo = snapshot.value as? [String: Any] {
                     var result: [String: Any]
                     result = userInfo
-                    result["toId"] = (message.toId as! String)
-                    result["fromId"] = (message.fromId as! String)
-                    result["text"] = (message.text as! String)
-                    result["date"] = (message.date as! Date)
+                    result["toId"] = message.toId!
+                    result["fromId"] = message.fromId!
+                    result["text"] = message.text!
+                    result["date"] = message.date!
                     result["incoming"] = (message.toId == Auth.auth().currentUser!.uid ? true : false)
                     results(result)
                 }

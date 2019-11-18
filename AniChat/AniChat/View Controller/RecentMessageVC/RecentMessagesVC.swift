@@ -16,7 +16,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
+    var messagesDictionary = [String: Message]()
     var messages :[Message] = []
     var login: LoginClient = LoginClient()
     var chat: ChatClient = ChatClient()
@@ -51,27 +51,23 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         
         chat.messageObserver(){ [weak self] message in
-                 guard let strongSelf = self else { return }
-                 strongSelf.messages.append(message)
-                 strongSelf.recentMessageTV.reloadData()
-             }
+            guard let strongSelf = self else { return }
+            
+            if let toId = message.toId {
+                strongSelf.messagesDictionary[toId] = message
+                strongSelf.messages = Array(strongSelf.messagesDictionary.values)
+            }
+            
+            //strongSelf.messages.append(message)
+            strongSelf.recentMessageTV.reloadData()
+        }
     }
-    
+     
     @objc func logout() {
         login.logout() { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.navigationController?.popViewController(animated: true)
         }
-//          let auth = Auth.auth()
-//        do {
-//            try auth.signOut()
-//            DispatchQueue.main.async { [weak self] in
-//              guard let strongSelf = self else { return }
-//                strongSelf.navigationController?.popViewController(animated: true)
-//            }
-//        } catch let signOutError as NSError {
-//          print ("Error signing out: %@", signOutError)
-//        }
     }
     
     @objc func showContacts(){
@@ -85,6 +81,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         Database.database().reference().child("users").observe(.childAdded) { snapshot in
             if let user = snapshot.value as? [String: Any] {
               //append to table view data source
+             
             }
         }
     }

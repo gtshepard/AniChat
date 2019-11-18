@@ -46,7 +46,6 @@ class LoginClient {
         static let reference = Storage.storage().reference()
         case uploadPhoto(String)
         
-        
         var photo: StorageReference {
             switch self {
             case .uploadPhoto(let photoName):
@@ -78,7 +77,7 @@ class LoginClient {
     func register(name: String, email: String, password: String,avatarUrl: URL, complete: @escaping ()-> Void) {
         
         Account.reference.createUser(withEmail: email , password: password) { authResult, error in
-            
+     
             guard NoError.errorless(error).errorless else { return }
             let userInfo = ["name": name, "email": email, "avatarUrl": (avatarUrl.absoluteString as String)] as [String: Any]
             guard let myUid = Account.myUid else { return }
