@@ -12,38 +12,14 @@ import Firebase
 
 class ChatClient {
     
-    enum DatabasePath {
-        static let reference = Database.database().reference()
-        static let users = DatabasePath.reference.child("users")
-        static let messages = DatabasePath.reference.child("messages")
-     
-        
-        
-        
-       
+    enum NodeConstant {
+        static let users = "users"
+        static let messages = "messages"
     }
-    enum MessageMaker {
-        static let maker = DatabasePath.messages.childByAutoId()
-        
-        case make([String : Any])
-        
-        var message: Void {
-            switch self {
-            case .make(let messageInfo):
-                MessageMaker.maker.updateChildValues(messageInfo)
-                return
-            }
-        }
-    }
-    
-    
-    enum Account {
-        static let myUid = Auth.auth().currentUser?.uid
-    }
-     
+
     func contactObserver(result: @escaping (User)->Void) {
-        DatabasePath.users.observe(.childAdded) { snapshot in
-            if snapshot.key != Account.myUid {
+        Database.database().reference().child(NodeConstant.users).observe(.childAdded) { snapshot in
+            if snapshot.key != Auth.auth().currentUser?.uid {
                 if let userInfo = snapshot.value as? [String: Any] {
                     let user = User()
                     user.id = snapshot.key
@@ -57,15 +33,15 @@ class ChatClient {
     }
     
     func messageObserver(result: @escaping (Message)->Void) {
-        DatabasePath.messages.observe(.childAdded) { snapshot in
+        Database.database().reference().child(NodeConstant.messages).observe(.childAdded) { snapshot in
             if let dictonary = snapshot.value as? [String: Any] {
                 let date = dictonary["date"] as! NSNumber
                 let message = Message()
-                message.toId = dictonary["toId"] as! String
-                message.fromId = dictonary["fromId"] as! String
-                message.text = dictonary["text"] as! String
+                message.toId = (dictonary["toId"] as! String)
+                message.fromId = (dictonary["fromId"] as! String)
+                message.text = (dictonary["text"] as! String)
                 message.date = Date.init(timeIntervalSince1970: TimeInterval(truncating: date))
-                message.incoming = message.toId == Account.myUid ? true : false
+                message.incoming = message.toId == Auth.auth().currentUser?.uid ? true : false
                 result(message)
             }
         }
@@ -73,7 +49,7 @@ class ChatClient {
     
     func send(text: String, recipient: User){
         let date = Date()
-        let messageInfo = ["toId": recipient.id, "fromId": Account.myUid, "date": date.timeIntervalSince1970 as! NSNumber , "text": text] as [String : Any]
-        MessageMaker.make(messageInfo).message
+        let messageInfo = ["toId": recipient.id, "fromId": Auth.auth().currentUser!.uid, "date": date.timeIntervalSince1970 as! NSNumber , "text": text] as [String : Any]
+        Database.database().reference().child(NodeConstant.messages).childByAutoId().updateChildValues(messageInfo)
     }
 }
