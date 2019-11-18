@@ -48,6 +48,7 @@ class RecentMessageCell: UITableViewCell {
             //imageView.setRoundedView(roundedView: imageView, toDiameter: 30)
             return imageView
         }()
+    
     var chat: ChatClient = ChatClient()
         var message:Message?{
             didSet{
@@ -92,7 +93,6 @@ class RecentMessageCell: UITableViewCell {
             }
         }
 
-        //add computed property once core data is init
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             
