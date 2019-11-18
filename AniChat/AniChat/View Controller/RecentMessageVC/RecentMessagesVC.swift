@@ -16,10 +16,12 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
     var messagesDictionary = [String: Message]()
     var messages :[Message] = []
     var login: LoginClient = LoginClient()
     var chat: ChatClient = ChatClient()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(recentMessageTV)
@@ -57,8 +59,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 strongSelf.messagesDictionary[toId] = message
                 strongSelf.messages = Array(strongSelf.messagesDictionary.values)
             }
-            
-            //strongSelf.messages.append(message)
+
             strongSelf.recentMessageTV.reloadData()
         }
     }
