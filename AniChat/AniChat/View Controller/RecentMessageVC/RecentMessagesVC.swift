@@ -51,18 +51,28 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
         
         
-        chat.messageObserver(){ [weak self] message in
-            guard let strongSelf = self else { return }
-            
-            if let toId = message.toId {
-                strongSelf.messagesDictionary[toId] = message
-                strongSelf.messages = Array(strongSelf.messagesDictionary.values)
-            }
-
-            strongSelf.recentMessageTV.reloadData()
-        }
-        chat.messagesForUserObserver() {  _ in
-            
+//        chat.messageObserver(){ [weak self] message in
+//            guard let strongSelf = self else { return }
+//
+//            if let toId = message.toId {
+//                strongSelf.messagesDictionary[toId] = message
+//                strongSelf.messages = Array(strongSelf.messagesDictionary.values)
+//            }
+//
+//            strongSelf.recentMessageTV.reloadData()
+//        }
+//        messages.removeAll()
+//        messagesDictionary.removeAll()
+//        recentMessageTV.reloadData()
+        
+        chat.messagesForUserObserver() { [weak self] message in
+//            print(message.toId!)
+//            guard let strongSelf = self else { return }
+//            if let toId = message.toId {
+//                strongSelf.messagesDictionary[toId] = message
+//                strongSelf.messages = Array(strongSelf.messagesDictionary.values)
+//            }
+//            strongSelf.recentMessageTV.reloadData()
         }
             
         //TODO: bug fix, login hit wuth a bad email email, button disables 
@@ -82,15 +92,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         present(contactVC, animated: true, completion: nil)
     }
     
-    func fetchMessages() {
-        Database.database().reference().child("users").observe(.childAdded) { snapshot in
-            if let user = snapshot.value as? [String: Any] {
-              //append to table view data source
-             
-            }
-        }
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }

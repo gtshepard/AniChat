@@ -51,14 +51,14 @@ class ChatClient {
     func messagesForUserObserver(results: @escaping ([String: Any])->Void){
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let reference = Database.database().reference().child("user-messages").child(uid)
-        reference.observeSingleEvent(of: .childAdded) { snapshot in
-            print("Message:", snapshot)
-            let messageId = snapshot.key
-           
-            let messageReference = Database.database().reference().child("messages").child(messageId)
+        reference.observe(.childAdded) { snapshot in
+            print("user_message:", snapshot)
+            
+           let messageId = snapshot.key
+           let messageReference = Database.database().reference().child("messages").child(messageId)
            messageReference.observeSingleEvent(of: .value, with: { snap in
-                print(snap)
-           }, withCancel: nil)
+                print("Message: ", snap)
+          }, withCancel: nil)
             
         }
     
