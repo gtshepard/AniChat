@@ -61,6 +61,9 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
             strongSelf.recentMessageTV.reloadData()
         }
+        chat.messageForUser(){ message in
+            
+        }
     }
      
     @objc func logout() {

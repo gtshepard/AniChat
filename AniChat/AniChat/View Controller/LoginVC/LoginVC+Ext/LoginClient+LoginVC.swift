@@ -15,7 +15,7 @@ extension LoginVC {
         
         home = RecentMessagesVC()
         loginRegisterButton.isEnabled = false
-        print("BUTTON PRESSED")
+    
         if loginSegmentControl.selectedSegmentIndex == 0 {
             handleLogin()
         } else {
