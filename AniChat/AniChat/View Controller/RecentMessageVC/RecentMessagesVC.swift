@@ -61,9 +61,11 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
             strongSelf.recentMessageTV.reloadData()
         }
-        chat.messageForUser(){ message in
+        chat.messagesForUserObserver() {  _ in
             
         }
+            
+        //TODO: bug fix, login hit wuth a bad email email, button disables 
     }
      
     @objc func logout() {
