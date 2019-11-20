@@ -45,12 +45,13 @@ class RecentMessageCell: UITableViewCell {
         let profileImageView: UIImageView = {
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFill
             //imageView.setRoundedView(roundedView: imageView, toDiameter: 30)
             return imageView
         }()
     
         var chat: ChatClient = ChatClient()
-        var message:Message?{
+        var message:Message? {
             didSet{
 //                chat.messageForUser(){ [weak self] results in
 //                    guard let strongSelf = self else { return }
@@ -79,14 +80,15 @@ class RecentMessageCell: UITableViewCell {
                             strongSelf.dateLabel.text = Date.monthDayYear(by: date)
                             strongSelf.messageLabel.text = strongSelf.message!.text
                              let imageStr = (dictionary["avatarUrl"] as! String)
-                             let imageUrl = URL(string: imageStr)!
-                             let session = URLSession.shared
-                             var task = session.dataTask(with: imageUrl) { data, response, error in
-                                DispatchQueue.main.async {
-                                    strongSelf.profileImageView.image = UIImage(data: data!)
-                                }
-                              }
-                            task.resume()
+//                             let imageUrl = URL(string: imageStr)!
+//                             let session = URLSession.shared
+//                             var task = session.dataTask(with: imageUrl) { data, response, error in
+//                                DispatchQueue.main.async {
+//                                    strongSelf.profileImageView.image = UIImage(data: data!)
+//                                }
+//                              }
+//                            task.resume()
+                            strongSelf.profileImageView.loadImageUsingCache(urlString: imageStr)
                         }
                     }
                 }

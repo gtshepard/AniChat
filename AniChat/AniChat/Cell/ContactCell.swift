@@ -48,13 +48,7 @@ class ContactCell: UITableViewCell {
                     strongSelf.profileImageView.image = UIImage(data: data!)
                 }
             }
-                   
-            
-                   task.resume()
-       
-            
-            
-            
+            task.resume()
         }
     }
 

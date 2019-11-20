@@ -14,6 +14,7 @@
 		8564FA67237F61BE00EE4BC7 /* LoginClient+LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA66237F61BE00EE4BC7 /* LoginClient+LoginVC.swift */; };
 		8564FA6B237F62D600EE4BC7 /* Alert+LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA6A237F62D600EE4BC7 /* Alert+LoginVC.swift */; };
 		8564FA76237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA75237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift */; };
+		858D4B172384E0CA00DD7D3F /* Ext+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858D4B162384E0CA00DD7D3F /* Ext+UIImageView.swift */; };
 		85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D103237DB433003F77A9 /* AppDelegate.swift */; };
 		85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D105237DB433003F77A9 /* SceneDelegate.swift */; };
 		85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D107237DB433003F77A9 /* LoginVC.swift */; };
@@ -45,6 +46,7 @@
 		8564FA66237F61BE00EE4BC7 /* LoginClient+LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginClient+LoginVC.swift"; sourceTree = "<group>"; };
 		8564FA6A237F62D600EE4BC7 /* Alert+LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+LoginVC.swift"; sourceTree = "<group>"; };
 		8564FA75237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatClient+InboxVC.swift"; sourceTree = "<group>"; };
+		858D4B162384E0CA00DD7D3F /* Ext+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIImageView.swift"; sourceTree = "<group>"; };
 		85A0D100237DB433003F77A9 /* AniChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AniChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A0D103237DB433003F77A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85A0D105237DB433003F77A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				85A0D134237E08A0003F77A9 /* Ext+UIView.swift */,
 				85A0D136237E0A50003F77A9 /* Ext+Date.swift */,
 				8564FA64237F579600EE4BC7 /* Alert+UIViewController.swift */,
+				858D4B162384E0CA00DD7D3F /* Ext+UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */,
 				85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */,
 				85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */,
+				858D4B172384E0CA00DD7D3F /* Ext+UIImageView.swift in Sources */,
 				851458C0237E6DC200FD3212 /* ChatClient.swift in Sources */,
 				8564FA6B237F62D600EE4BC7 /* Alert+LoginVC.swift in Sources */,
 				85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */,
