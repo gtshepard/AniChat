@@ -21,20 +21,18 @@ extension UIImageView {
             return
         }
         
-        
         let imageUrl = URL(string: urlString)!
         let session = URLSession.shared
         var task = session.dataTask(with: imageUrl) { [weak self] data, response, error in
             guard let strongSelf = self else { return }
-            
-                DispatchQueue.main.async {
-                    if let downloadedImage = UIImage(data: data!) {
-                        cache.setObject(downloadedImage, forKey: urlString as! NSString)
-                        strongSelf.image = downloadedImage
-                    }
+            DispatchQueue.main.async {
+                if let downloadedImage = UIImage(data: data!) {
+                   cache.setObject(downloadedImage, forKey: urlString as! NSString)
+                   strongSelf.image = downloadedImage
                 }
+            }
         }
+        
         task.resume()
     }
-    
 }
