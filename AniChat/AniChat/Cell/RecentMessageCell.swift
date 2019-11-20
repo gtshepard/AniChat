@@ -67,7 +67,7 @@ class RecentMessageCell: UITableViewCell {
 //                    }
 //                    task.resume()
 //                }
-                
+                //this needs to change, see how he cached image with fire base
                 if let toId = message?.toId {
                     let ref = Database.database().reference().child("users").child(toId)
                     ref.observeSingleEvent(of: .value) { [weak self] snapshot in

@@ -58,6 +58,7 @@ class ChatClient {
            let messageReference = Database.database().reference().child("messages").child(messageId)
            messageReference.observeSingleEvent(of: .value, with: { snap in
                 print("Message: ", snap)
+            
           }, withCancel: nil)
             
         }
