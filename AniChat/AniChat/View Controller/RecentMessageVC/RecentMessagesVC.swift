@@ -82,43 +82,19 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         messagesDictionary.removeAll()
         messages.removeAll()
         recentMessageTV.reloadData()
-        userMessages()
+ 
+        chat.messagesForUserObserver() { [weak self] message in
+            guard let strongSelf = self else { return }
+            if let toId = message.toId {
+                strongSelf.messagesDictionary[toId] = message
+                strongSelf.messages = Array(strongSelf.messagesDictionary.values)
+                strongSelf.messages = strongSelf.messages.sorted { $0.date! > $1.date! }
+            }
+            strongSelf.recentMessageTV.reloadData()
+        }
         
     }
     
-    
-    func userMessages() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let reference = Database.database().reference().child("user-messages").child(uid)
-        reference.observe(.childAdded) { snapshot in
-            print("user_message:", snapshot)
-            
-           let messageId = snapshot.key
-           let messageReference = Database.database().reference().child("messages").child(messageId)
-           messageReference.observeSingleEvent(of: .value, with: {[weak self] snap in
-                print("Message: ", snap)
-            guard let strongSelf = self else { return }
-            if let dictonary = snap.value as? [String: Any] {
-                let date = (dictonary["date"] as! NSNumber)
-                let message = Message()
-                
-                message.toId = (dictonary["toId"] as! String)
-                message.fromId = (dictonary["fromId"] as! String)
-                message.text = (dictonary["text"] as! String)
-                message.date = Date.init(timeIntervalSince1970: TimeInterval(truncating: date))
-                message.incoming = message.toId == Auth.auth().currentUser?.uid ? true : false
-                
-                if let toId = message.toId {
-                        strongSelf.messagesDictionary[toId] = message
-                        strongSelf.messages = Array(strongSelf.messagesDictionary.values)
-                        strongSelf.messages = strongSelf.messages.sorted { $0.date! > $1.date! }
-                 }
-                strongSelf.recentMessageTV.reloadData()
-            }
-          }, withCancel: nil)
-        }
-    }
-     
     @objc func logout() {
         login.logout() { [weak self] in
             guard let strongSelf = self else { return }

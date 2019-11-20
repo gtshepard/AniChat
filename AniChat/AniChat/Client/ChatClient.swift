@@ -48,21 +48,26 @@ class ChatClient {
         }
     }
     
-    func messagesForUserObserver(results: @escaping ([String: Any])->Void){
+    func messagesForUserObserver(result: @escaping (Message)->Void){
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let reference = Database.database().reference().child("user-messages").child(uid)
         reference.observe(.childAdded) { snapshot in
-            print("user_message:", snapshot)
-            
-           let messageId = snapshot.key
-           let messageReference = Database.database().reference().child("messages").child(messageId)
-           messageReference.observeSingleEvent(of: .value, with: { snap in
+            let messageId = snapshot.key
+            let messageReference = Database.database().reference().child("messages").child(messageId)
+            messageReference.observeSingleEvent(of: .value) { snap in
                 print("Message: ", snap)
-            
-          }, withCancel: nil)
-            
+                if let dictonary = snap.value as? [String: Any] {
+                    let date = (dictonary["date"] as! NSNumber)
+                    let message = Message()
+                    message.toId = (dictonary["toId"] as! String)
+                    message.fromId = (dictonary["fromId"] as! String)
+                    message.text = (dictonary["text"] as! String)
+                    message.date = Date.init(timeIntervalSince1970: TimeInterval(truncating: date))
+                    message.incoming = message.toId == Auth.auth().currentUser?.uid ? true : false
+                    result(message)
+                }
+            }
         }
-    
     }
     
     func send(text: String, recipient: User){
