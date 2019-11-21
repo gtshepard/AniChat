@@ -22,8 +22,6 @@ class MessageCell: UITableViewCell {
     var messageTrailingConstraint: NSLayoutConstraint?
     var avatarLeadingConstraint: NSLayoutConstraint!
     var avatarTrailingConstraint: NSLayoutConstraint!
-    var user: String?
-    var recipient: String?
     var contact: User?
     
     var message: Message? {
@@ -71,13 +69,7 @@ class MessageCell: UITableViewCell {
             nameLabel?.translatesAutoresizingMaskIntoConstraints = false
             nameLabel?.font = UIFont.boldSystemFont(ofSize: 18)
             nameLabel?.text = "DEFAULT"
-//            if !message.incoming! {
-//                nameLabel?.text = Auth.auth().currentUser?.uid
-//                print("cell user:", user)
-//            } else {
-//                nameLabel?.text = message.toId
-//                print("cell rep:", recipient)
-//            }
+
     
             let incomingMessageConstraints = [
                 avatarImageView!.topAnchor.constraint(equalTo: topAnchor , constant: 0),

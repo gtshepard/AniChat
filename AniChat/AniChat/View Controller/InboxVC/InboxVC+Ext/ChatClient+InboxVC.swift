@@ -47,10 +47,13 @@ extension InboxVC {
                 message.text = (messageInfo["text"] as! String)
                 let date = (messageInfo["date"] as! NSNumber)
                 message.date = Date.init(timeIntervalSince1970: TimeInterval(truncating: date))
-                strongSelf.messages.append(message)
-                DispatchQueue.main.async {
-                    strongSelf.tableView.reloadData()
+                if message.chatPartnerId() == strongSelf.user?.id {
+                    strongSelf.messages.append(message)
+                        DispatchQueue.main.async {
+                        strongSelf.tableView.reloadData()
+                    }
                 }
+              
             }
         }
     }

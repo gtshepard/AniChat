@@ -157,31 +157,31 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                 let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as?
                 MessageCell
-                
-                if let toId = messages[indexPath.row].toId {
-                    let users = Database.database().reference().child("users").child(toId)
-                    users.observeSingleEvent(of: .value) { snapshot in
-                        if let dictionary = snapshot.value as? [String: Any]{
-                            let name = dictionary["name"]! as! String
-                            DispatchQueue.main.async {
-                                cell?.recipient = name
-                            }
-                        }
-                    }
-                }
-            
-                if let userId = Auth.auth().currentUser?.uid {
-                    let users = Database.database().reference().child("users").child(userId)
-                    users.observeSingleEvent(of: .value) { snapshot in
-                        if let dictionary = snapshot.value as? [String: Any]{
-                            let name = dictionary["name"]! as! String
-                            DispatchQueue.main.async {
-                                print(name)
-                                cell?.user = name
-                            }
-                        }
-                    }
-                }
+//                
+//                if let toId = messages[indexPath.row].toId {
+//                    let users = Database.database().reference().child("users").child(toId)
+//                    users.observeSingleEvent(of: .value) { snapshot in
+//                        if let dictionary = snapshot.value as? [String: Any]{
+//                            let name = dictionary["name"]! as! String
+//                            DispatchQueue.main.async {
+//                                cell?.recipient = name
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                if let userId = Auth.auth().currentUser?.uid {
+//                    let users = Database.database().reference().child("users").child(userId)
+//                    users.observeSingleEvent(of: .value) { snapshot in
+//                        if let dictionary = snapshot.value as? [String: Any]{
+//                            let name = dictionary["name"]! as! String
+//                            DispatchQueue.main.async {
+//                                print(name)
+//                                cell?.user = name
+//                            }
+//                        }
+//                    }
+//                }
                cell?.contact = contact
                cell?.message = messages[indexPath.row]
             return cell!

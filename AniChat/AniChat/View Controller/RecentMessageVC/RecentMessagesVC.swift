@@ -126,6 +126,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
                 let inbox = InboxVC()
                 inbox.contact = user
+                inbox.user = user
                 strongSelf.navigationController!.pushViewController(inbox, animated: true)
             }
         
