@@ -187,3 +187,6 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             return cell!
         }
 }
+
+
+//want to obser all messages for the current user that is logged in

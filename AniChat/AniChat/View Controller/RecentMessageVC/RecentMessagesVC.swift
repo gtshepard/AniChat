@@ -115,16 +115,20 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
 
             let ref = Database.database().reference().child("users").child(chatPartnerId)
-            ref.observeSingleEvent(of: .value){ snapshot in
+            ref.observeSingleEvent(of: .value){ [weak self] snapshot in
                 print(snapshot)
+                guard let strongSelf = self else { return }
                 guard let  userInfo = snapshot.value as? [String: Any] else { return }
                 let user = User()
                 user.id = snapshot.key
                 user.name = (userInfo["name"] as! String)
                 user.email = (userInfo["email"] as! String)
                 user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
+                let inbox = InboxVC()
+                inbox.contact = user
+                strongSelf.navigationController!.pushViewController(inbox, animated: true)
             }
-//
+        
 //            inbox.tableView.reloadData()
 //            self.navigationController?.pushViewController(inbox, animated: true)
     }

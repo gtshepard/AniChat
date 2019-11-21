@@ -29,12 +29,12 @@ class MessageCell: UITableViewCell {
     var message: Message? {
         didSet {
             guard let message = message else { return }
-            bubbleView.backgroundColor = message.incoming! ? .white : .darkGray
-            messageLabel.textColor =  message.incoming! ? .black : .white
+           // bubbleView.backgroundColor = message.incoming! ? .white : .darkGray
+            bubbleView.backgroundColor = .darkGray
+            messageLabel.textColor = .white
+            //messageLabel.textColor =  message.incoming! ? .black : .white
             messageLabel.text = message.text!
-            
-           
-            
+        
             if let photo = avatarImageView {
                 photo.removeFromSuperview()
             }
@@ -55,70 +55,46 @@ class MessageCell: UITableViewCell {
                 removeConstraint(messageTopConstraint)
             }
         
-          //  if message.incoming! {
-            //    if message.useProfile! {
-                    
-                    avatarImageView = UIImageView()
-                    avatarImageView!.translatesAutoresizingMaskIntoConstraints = false
-                    avatarImageView!.backgroundColor = .lightGray
+            guard let contact = contact else { return }
+            avatarImageView = UIImageView()
+            avatarImageView!.translatesAutoresizingMaskIntoConstraints = false
+            avatarImageView!.backgroundColor = .lightGray
             
+            avatarImageView!.loadImageUsingCache(urlString: contact.avatar!.absoluteString)
             
-              if !message.incoming! {
-                
-                    let session = URLSession.shared
-                    var task = session.dataTask(with: contact!.avatar!) { [weak self] data, response, error in
-                        guard let strongSelf = self else { return }
-                        DispatchQueue.main.async {
-                            strongSelf.avatarImageView!.image = UIImage(data: data!)
-                        }
-                    }
-                    task.resume()
-                  
-                    } else {
-                       
-                        let session = URLSession.shared
-                        var task = session.dataTask(with: contact!.avatar!) { [weak self] data, response, error in
-                        guard let strongSelf = self else { return }
-                            DispatchQueue.main.async {
-                                    strongSelf.avatarImageView!.image = UIImage(data: data!)
-                            }
-                         }
-                        task.resume()
-                    }
-            
-                    avatarImageView!.clipsToBounds = true
-                    //avatarImageView!.setRoundedView(roundedView: avatarImageView!, toDiameter: 30.0)
-                    addSubview(avatarImageView!)
+            avatarImageView!.clipsToBounds = true
+            //avatarImageView!.setRoundedView(roundedView: avatarImageView!, toDiameter: 30.0)
+            addSubview(avatarImageView!)
+
+            nameLabel = UILabel()
+            addSubview(nameLabel!)
+            nameLabel?.translatesAutoresizingMaskIntoConstraints = false
+            nameLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+            nameLabel?.text = "DEFAULT"
+//            if !message.incoming! {
+//                nameLabel?.text = Auth.auth().currentUser?.uid
+//                print("cell user:", user)
+//            } else {
+//                nameLabel?.text = message.toId
+//                print("cell rep:", recipient)
+//            }
     
-                    nameLabel = UILabel()
-                    addSubview(nameLabel!)
-                    nameLabel?.translatesAutoresizingMaskIntoConstraints = false
-                    nameLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+            let incomingMessageConstraints = [
+                avatarImageView!.topAnchor.constraint(equalTo: topAnchor , constant: 0),
+                avatarImageView!.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+                avatarImageView!.widthAnchor.constraint(equalToConstant: 60),
+                avatarImageView!.heightAnchor.constraint(equalToConstant: 60),
+                nameLabel!.topAnchor.constraint(equalTo: avatarImageView!.bottomAnchor, constant: 4),
+                nameLabel!.leadingAnchor.constraint(equalTo: avatarImageView!.trailingAnchor, constant: 0)
+            ]
             
-                    if !message.incoming! {
-                        nameLabel?.text = Auth.auth().currentUser?.uid
-                        print("cell user:", user)
-                    } else {
-                        nameLabel?.text = message.toId
-                        print("cell rep:", recipient)
-                    }
-            
-                    let incomingMessageConstraints = [
-                        avatarImageView!.topAnchor.constraint(equalTo: topAnchor , constant: 0),
-                        avatarImageView!.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-                        avatarImageView!.widthAnchor.constraint(equalToConstant: 60),
-                        avatarImageView!.heightAnchor.constraint(equalToConstant: 60),
-                        nameLabel!.topAnchor.constraint(equalTo: avatarImageView!.bottomAnchor, constant: 4),
-                        nameLabel!.leadingAnchor.constraint(equalTo: avatarImageView!.trailingAnchor, constant: 0)
-                    ]
-                    
-                    NSLayoutConstraint.activate(incomingMessageConstraints)
-                    messageTopConstraint = messageLabel.topAnchor.constraint(equalTo: nameLabel!.bottomAnchor, constant: 15)
-                    messageLeadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: nameLabel!.leadingAnchor, constant: 15)
-                
-                    messageTopConstraint.isActive = true
-                    messageLeadingConstraint!.isActive = true
-                    messageTrailingConstraint!.isActive = false
+            NSLayoutConstraint.activate(incomingMessageConstraints)
+            messageTopConstraint = messageLabel.topAnchor.constraint(equalTo: nameLabel!.bottomAnchor, constant: 15)
+            messageLeadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: nameLabel!.leadingAnchor, constant: 15)
+        
+            messageTopConstraint.isActive = true
+            messageLeadingConstraint!.isActive = true
+            messageTrailingConstraint!.isActive = false
                 //}
 //
 //                } else {
@@ -168,6 +144,12 @@ class MessageCell: UITableViewCell {
         messageTopConstraint = messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16)
         messageLeadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
         messageTrailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+    }
+    
+    override func prepareForReuse() {
+        messageLabel.text = nil
+        avatarImageView?.image = nil
+        nameLabel?.text = nil
     }
     
     func setupCell(){
