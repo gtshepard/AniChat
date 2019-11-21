@@ -57,6 +57,5 @@ extension LoginVC {
             strongSelf.navigationController?.pushViewController(strongSelf.home!, animated: true)
             strongSelf.loginRegisterButton.isEnabled = true
         }
-        
     }
 }

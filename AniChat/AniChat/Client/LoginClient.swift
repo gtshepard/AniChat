@@ -25,7 +25,8 @@ class LoginClient {
     
     func register(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void){
         
-        let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
+        //let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
+        let imageData = UIImage(imageLiteralResourceName: avatar).jpegData(compressionQuality: 0.1)!
         let dataPath = Storage.storage().reference().child(avatar)
     
         dataPath.putData(imageData, metadata: nil) { [weak self] _, error in
@@ -53,7 +54,7 @@ class LoginClient {
             }
         }
     }
-    
+
     func login(email: String, password: String, completion: @escaping (String?)->Void) {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if error != nil {
@@ -67,5 +68,20 @@ class LoginClient {
     func logout(completion: @escaping ()->Void) {
         try! Auth.auth().signOut()
         completion()
+    }
+    
+    func fetchUserProfile(result: @escaping (User)->Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value){ snapshot in
+            
+            if let userInfo = snapshot.value as? [String: Any] {
+                let user = User()
+                user.id = uid
+                user.name = (userInfo["name"] as! String)
+                user.email = (userInfo["email"] as! String)
+                user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
+                result(user)
+            }
+        }
     }
 }

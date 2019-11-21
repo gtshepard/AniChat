@@ -43,10 +43,18 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
         var contact: User?
         var chat: ChatClient = ChatClient()
     
+    
+        var user: User? {
+            didSet {
+                observeMessages()
+            }
+        }
         override func viewDidLoad() {
             
             super.viewDidLoad()
-            navigationItem.title = contact!.name!
+            if user == nil {
+                navigationItem.title = contact!.name!
+            }
             setupTableView()
             view.addSubview(sendBarContainer)
             view.addConstraintsWithFormat("H:|[v0]|", views: sendBarContainer)
@@ -61,7 +69,10 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             //listen for keyboard events
             NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifications), name: UIResponder.keyboardWillShowNotification , object: nil)
             
-             observeMessages()
+            // observeMessages()
+            if user == nil {
+                observeMessages()
+            }
         }
  
         @objc func handleSendButtonTap() {

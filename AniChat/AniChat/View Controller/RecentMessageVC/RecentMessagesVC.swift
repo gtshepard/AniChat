@@ -49,36 +49,8 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: newMessageImage, style: .plain, target: self, action: #selector(showContacts))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
-//        chat.messagesForUserObserver(){ message in
-//
-//        }
-        
-//        chat.messageObserver(){ [weak self] message in
-//            guard let strongSelf = self else { return }
-//
-//            if let toId = message.toId {
-//                strongSelf.messagesDictionary[toId] = message
-//                strongSelf.messages = Array(strongSelf.messagesDictionary.values)
-//            }
-//
-//            strongSelf.recentMessageTV.reloadData()
-//        }
-//        messages.removeAll()
-//        messagesDictionary.removeAll()
-//        recentMessageTV.reloadData()
-        
-//        chat.messagesForUserObserver() { [weak self] message in
-////            print(message.toId!)
-//            guard let strongSelf = self else { return }
-//            if let toId = message.toId {
-//                strongSelf.messagesDictionary[toId] = message
-//                strongSelf.messages = Array(strongSelf.messagesDictionary.values)
-//            }
-//            strongSelf.recentMessageTV.reloadData()
-//        }
-            
         //TODO: bug fix, login hit wuth a bad email email, button disables
-        
+        setupNavBar()
         messagesDictionary.removeAll()
         messages.removeAll()
         recentMessageTV.reloadData()
@@ -93,8 +65,16 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             strongSelf.recentMessageTV.reloadData()
         }
         
+        
     }
-    
+    func setupNavBar() {
+        login.fetchUserProfile() {[weak self] user in
+            guard let strongSelf = self else { return }
+            strongSelf.navigationItem.title = user.name
+        }
+        
+        
+    }
     @objc func logout() {
         login.logout() { [weak self] in
             guard let strongSelf = self else { return }
@@ -126,8 +106,26 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    let friendMessengerViewController = FriendMessengerViewController()
-//    friendMessengerViewController.friend = friends[indexPath.row]
-//    navigationController?.pushViewController(friendMessengerViewController, animated: true)
+   
+//            let inbox = InboxVC()
+//            inbox.user = User()
+
+            guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else {
+                return
+            }
+
+            let ref = Database.database().reference().child("users").child(chatPartnerId)
+            ref.observeSingleEvent(of: .value){ snapshot in
+                print(snapshot)
+                guard let  userInfo = snapshot.value as? [String: Any] else { return }
+                let user = User()
+                user.id = snapshot.key
+                user.name = (userInfo["name"] as! String)
+                user.email = (userInfo["email"] as! String)
+                user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
+            }
+//
+//            inbox.tableView.reloadData()
+//            self.navigationController?.pushViewController(inbox, animated: true)
     }
 }
