@@ -13,22 +13,6 @@ import Firebase
 extension InboxVC {
     
     func observeMessages(){
-//        chat.messageObserver(){ [weak self] message in
-//            guard let strongSelf = self else { return }
-//            strongSelf.messages.append(message)
-//            strongSelf.tableView.reloadData()
-//
-//            //not scrolling
-//            guard strongSelf.messages.count < 2 else { return }
-//            let indexPath = IndexPath(row:  strongSelf.messages.count-1, section: 0)
-//            let insets = UIEdgeInsets(top: 0, left: 0, bottom: (strongSelf.keyboardHeight ?? strongSelf.sendBarContainer.frame.size.height) + 40 , right: 0)
-//
-//            strongSelf.tableView.contentInset = insets
-//            strongSelf.tableView.scrollIndicatorInsets = insets
-//            strongSelf.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-//
-//        }
-        
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
@@ -62,5 +46,6 @@ extension InboxVC {
         guard let contact = self.contact else { return }
         chat.send(text: text , recipient: contact)
         sendBarTF.text = ""
+        tableView.reloadData()
     }
 }

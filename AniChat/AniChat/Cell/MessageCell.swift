@@ -52,13 +52,45 @@ class MessageCell: UITableViewCell {
             if let messageTopConstraint = messageTopConstraint {
                 removeConstraint(messageTopConstraint)
             }
+            
+            
+            
         
-            guard let contact = contact else { return }
+            //guard let contact = contact else { return }
             avatarImageView = UIImageView()
             avatarImageView!.translatesAutoresizingMaskIntoConstraints = false
             avatarImageView!.backgroundColor = .lightGray
             
-            avatarImageView!.loadImageUsingCache(urlString: contact.avatar!.absoluteString)
+            if message.fromId == Auth.auth().currentUser?.uid {
+            //outgoing
+                print("OUTGOING")
+                guard let fromId = message.fromId else { return  }
+                let ref = Database.database().reference().child("users").child(fromId)
+                ref.observeSingleEvent(of: .value) { [weak self] snapshot in
+                    guard let strongSelf = self else { return }
+                    if let dictionary = snapshot.value as? [String: Any] {
+                        strongSelf.nameLabel?.text = (dictionary["name"] as! String)
+                        let imageStr = (dictionary["avatarUrl"] as! String)
+                        strongSelf.avatarImageView?.loadImageUsingCache(urlString: imageStr)
+                    }
+                }
+            } else {
+            //incoming
+                guard let fromId = message.fromId else { return  }
+                let ref = Database.database().reference().child("users").child(fromId)
+                ref.observeSingleEvent(of: .value) { [weak self] snapshot in
+                    guard let strongSelf = self else { return }
+                    if let dictionary = snapshot.value as? [String: Any] {
+                        strongSelf.nameLabel?.text = (dictionary["name"] as! String)
+                        let imageStr = (dictionary["avatarUrl"] as! String)
+                        strongSelf.avatarImageView?.loadImageUsingCache(urlString: imageStr)
+                    }
+                }
+            }
+            
+            
+            
+            //avatarImageView!.loadImageUsingCache(urlString: contact.avatar!.absoluteString)
             
             avatarImageView!.clipsToBounds = true
             //avatarImageView!.setRoundedView(roundedView: avatarImageView!, toDiameter: 30.0)

@@ -53,6 +53,7 @@ class RecentMessageCell: UITableViewCell {
         var chat: ChatClient = ChatClient()
         var message:Message? {
             didSet{
+                
 
                 if let toId = message?.toId {
                     let ref = Database.database().reference().child("users").child(toId)
@@ -83,6 +84,7 @@ class RecentMessageCell: UITableViewCell {
         }
     
     func setupCell() {
+        
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(timeLabel)
@@ -109,32 +111,9 @@ class RecentMessageCell: UITableViewCell {
        ]
        NSLayoutConstraint.activate(cellContraints)
     }
-    func clearCell() {
-        
-        profileImageView.removeFromSuperview()
-        nameLabel.removeFromSuperview()
-        dateLabel.removeFromSuperview()
-        messageLabel.removeFromSuperview()
-        timeLabel.removeFromSuperview()
-        
-    }
+ 
     override func prepareForReuse() {
       super.prepareForReuse()
-        
-        
-//      profileImageView.removeFromSuperview()
-//      nameLabel.removeFromSuperview()
-//      dateLabel.removeFromSuperview()
-//      messageLabel.removeFromSuperview()
-//      timeLabel.removeFromSuperview()
-//
-//      addSubview(profileImageView)
-//      addSubview(nameLabel)
-//      addSubview(timeLabel)
-//      addSubview(dateLabel)
-//      addSubview(messageLabel)
-        
-        
     }
 }
 
