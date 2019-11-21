@@ -57,15 +57,15 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
  
         chat.messagesForUserObserver() { [weak self] message in
             guard let strongSelf = self else { return }
-            if let toId = message.toId {
+           
+            if message.toId! != Auth.auth().currentUser?.uid {
+                guard let toId = message.toId else { return }
                 strongSelf.messagesDictionary[toId] = message
                 strongSelf.messages = Array(strongSelf.messagesDictionary.values)
                 strongSelf.messages = strongSelf.messages.sorted { $0.date! > $1.date! }
+                strongSelf.recentMessageTV.reloadData()
             }
-            strongSelf.recentMessageTV.reloadData()
         }
-        
-        
     }
     func setupNavBar() {
         login.fetchUserProfile() {[weak self] user in

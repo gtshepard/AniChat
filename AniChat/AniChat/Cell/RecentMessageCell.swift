@@ -75,36 +75,66 @@ class RecentMessageCell: UITableViewCell {
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             
-            addSubview(profileImageView)
-            addSubview(nameLabel)
-            addSubview(timeLabel)
-            addSubview(dateLabel)
-            addSubview(messageLabel)
-            
-            let cellContraints = [
-                profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 30),
-                profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-                profileImageView.widthAnchor.constraint(equalToConstant: 50),
-                profileImageView.heightAnchor.constraint(equalToConstant: 50),
-                nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 30),
-                nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 30),
-                
-                timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 30),
-                timeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-                
-                dateLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: -30),
-                dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-                
-                messageLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 30),
-               messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 30),
-               messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -105),
-            ]
-            NSLayoutConstraint.activate(cellContraints)
+            setupCell()
         }
         
         required init?(coder: NSCoder) {
              fatalError("init(coder:) has not been implemented")
         }
-
-
+    
+    func setupCell() {
+        addSubview(profileImageView)
+        addSubview(nameLabel)
+        addSubview(timeLabel)
+        addSubview(dateLabel)
+        addSubview(messageLabel)
+                   
+       let cellContraints = [
+           profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 30),
+           profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+           profileImageView.widthAnchor.constraint(equalToConstant: 50),
+           profileImageView.heightAnchor.constraint(equalToConstant: 50),
+           nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 30),
+           nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 30),
+           
+           timeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 30),
+           timeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+           
+           dateLabel.topAnchor.constraint(equalTo: bottomAnchor, constant: -30),
+           dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+           
+           messageLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 30),
+          messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 30),
+          messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -105),
+       ]
+       NSLayoutConstraint.activate(cellContraints)
+    }
+    func clearCell() {
+        
+        profileImageView.removeFromSuperview()
+        nameLabel.removeFromSuperview()
+        dateLabel.removeFromSuperview()
+        messageLabel.removeFromSuperview()
+        timeLabel.removeFromSuperview()
+        
+    }
+    override func prepareForReuse() {
+      super.prepareForReuse()
+        
+        
+//      profileImageView.removeFromSuperview()
+//      nameLabel.removeFromSuperview()
+//      dateLabel.removeFromSuperview()
+//      messageLabel.removeFromSuperview()
+//      timeLabel.removeFromSuperview()
+//
+//      addSubview(profileImageView)
+//      addSubview(nameLabel)
+//      addSubview(timeLabel)
+//      addSubview(dateLabel)
+//      addSubview(messageLabel)
+        
+        
+    }
 }
+
