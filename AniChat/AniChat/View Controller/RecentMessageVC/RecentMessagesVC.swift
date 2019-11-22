@@ -21,6 +21,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var messages :[Message] = []
     var login: LoginClient = LoginClient()
     var chat: ChatClient = ChatClient()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(recentMessageTV)
@@ -51,9 +52,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
         //TODO: bug fix, login hit wuth a bad email email, button disables
         setupNavBar()
-        messagesDictionary.removeAll()
-        messages.removeAll()
-        recentMessageTV.reloadData()
+   
  
         chat.messagesForUserObserver() { [weak self] message in
             guard let strongSelf = self else { return }
@@ -70,10 +69,13 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     func setupNavBar() {
         login.fetchUserProfile() {[weak self] user in
             guard let strongSelf = self else { return }
-            strongSelf.navigationItem.title = user.name
+            DispatchQueue.main.async {
+                strongSelf.messagesDictionary.removeAll()
+                strongSelf.messages.removeAll()
+                strongSelf.recentMessageTV.reloadData()
+                strongSelf.navigationItem.title = user.name
+            }
         }
-        
-        
     }
     @objc func logout() {
         login.logout() { [weak self] in
@@ -106,14 +108,8 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-   
-//            let inbox = InboxVC()
-//            inbox.user = User()
 
-            guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else {
-                return
-            }
-
+            guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else { return }
             let ref = Database.database().reference().child("users").child(chatPartnerId)
             ref.observeSingleEvent(of: .value){ [weak self] snapshot in
                 print(snapshot)
@@ -129,8 +125,5 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 inbox.user = user
                 strongSelf.navigationController!.pushViewController(inbox, animated: true)
             }
-        
-//            inbox.tableView.reloadData()
-//            self.navigationController?.pushViewController(inbox, animated: true)
     }
 }

@@ -63,7 +63,10 @@ class MessageCell: UITableViewCell {
             
             if message.fromId == Auth.auth().currentUser?.uid {
             //outgoing
-                print("OUTGOING")
+                
+                bubbleView.backgroundColor = .darkGray
+                messageLabel.textColor = .white
+    
                 guard let fromId = message.fromId else { return  }
                 let ref = Database.database().reference().child("users").child(fromId)
                 ref.observeSingleEvent(of: .value) { [weak self] snapshot in
@@ -74,8 +77,13 @@ class MessageCell: UITableViewCell {
                         strongSelf.avatarImageView?.loadImageUsingCache(urlString: imageStr)
                     }
                 }
+      
+                
+                
             } else {
             //incoming
+                bubbleView.backgroundColor = .white
+                messageLabel.textColor = .black
                 guard let fromId = message.fromId else { return  }
                 let ref = Database.database().reference().child("users").child(fromId)
                 ref.observeSingleEvent(of: .value) { [weak self] snapshot in
@@ -88,9 +96,6 @@ class MessageCell: UITableViewCell {
                 }
             }
             
-            
-            
-            //avatarImageView!.loadImageUsingCache(urlString: contact.avatar!.absoluteString)
             
             avatarImageView!.clipsToBounds = true
             //avatarImageView!.setRoundedView(roundedView: avatarImageView!, toDiameter: 30.0)
@@ -171,6 +176,7 @@ class MessageCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         messageLabel.text = nil
         avatarImageView?.image = nil
         nameLabel?.text = nil

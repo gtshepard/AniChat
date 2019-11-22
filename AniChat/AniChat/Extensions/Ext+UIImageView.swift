@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 let cache = NSCache<NSString, UIImage>()
-
+var dataTask: URLSessionTask?
 extension UIImageView {
     
     func loadImageUsingCache(urlString: String) {
@@ -23,7 +23,7 @@ extension UIImageView {
         
         let imageUrl = URL(string: urlString)!
         let session = URLSession.shared
-        var task = session.dataTask(with: imageUrl) { [weak self] data, response, error in
+        dataTask = session.dataTask(with: imageUrl) { [weak self] data, response, error in
             guard let strongSelf = self else { return }
             DispatchQueue.main.async {
                 if let downloadedImage = UIImage(data: data!) {
@@ -33,6 +33,10 @@ extension UIImageView {
             }
         }
         
-        task.resume()
+        dataTask?.resume()
+    }
+    func cancelImageRequest() {
+        guard let task = dataTask else { return }
+        task.cancel()
     }
 }

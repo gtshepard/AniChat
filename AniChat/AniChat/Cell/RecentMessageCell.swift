@@ -53,10 +53,9 @@ class RecentMessageCell: UITableViewCell {
         var chat: ChatClient = ChatClient()
         var message:Message? {
             didSet{
-                
-
-                if let toId = message?.toId {
-                    let ref = Database.database().reference().child("users").child(toId)
+                setupCell()
+                if let partnerId = message?.chatPartnerId(){
+                    let ref = Database.database().reference().child("users").child(partnerId)
                     ref.observeSingleEvent(of: .value) { [weak self] snapshot in
                         guard let strongSelf = self else { return }
                         if let dictionary = snapshot.value as? [String: Any] {
@@ -75,8 +74,6 @@ class RecentMessageCell: UITableViewCell {
 
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
-            
-            setupCell()
         }
         
         required init?(coder: NSCoder) {
@@ -106,14 +103,29 @@ class RecentMessageCell: UITableViewCell {
            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
            
            messageLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 30),
-          messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 30),
-          messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -105),
+           messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 30),
+           messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -105),
        ]
        NSLayoutConstraint.activate(cellContraints)
     }
  
+    func clearCell() {
+        profileImageView.cancelImageRequest()
+        profileImageView.removeFromSuperview()
+        dateLabel.removeFromSuperview()
+        nameLabel.removeFromSuperview()
+        messageLabel.removeFromSuperview()
+        timeLabel.removeFromSuperview()
+        profileImageView.image = nil
+        dateLabel.text = nil
+        messageLabel.text = nil
+        timeLabel.text = nil
+        nameLabel.text = nil
+    }
     override func prepareForReuse() {
       super.prepareForReuse()
+      clearCell()
+       
     }
 }
 
