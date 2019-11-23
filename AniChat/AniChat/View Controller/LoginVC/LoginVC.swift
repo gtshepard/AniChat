@@ -117,6 +117,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var nameTextFieldHeightConstraint: NSLayoutConstraint?
     var emailTextFieldHeightConstraint: NSLayoutConstraint?
     var passwordTextFieldHeightConstraint: NSLayoutConstraint?
+    var home: RecentMessagesVC?
 
     var avatars: [String] = ["001-panda bear","002-dog","003-elephant","004-sheep", "005-fox", "006-crocodile", "007-llama", "008-zebra","009-horse", "010-snake","011-bear", "012-cat", "013-rhinoceros","014-sloth","015-whale","016-frog", "017-hippopotamus", "018-koala", "019-boar", "020-pig","021-guinea pig", "022-squirrel", "023-lemur", "024-duck", "025-monkey", "026-camel",
         "027-hen", "028-walrus", "029-mole", "030-mouse","031-buffalo", "032-cow","033-owl",

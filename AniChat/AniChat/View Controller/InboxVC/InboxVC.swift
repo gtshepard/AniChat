@@ -31,21 +31,30 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             return textField
         }()
         
-        let sendButton: UIButton = {
+       lazy var sendButton: UIButton = {
             let button = UIButton()
             button.setTitle("Send", for: .normal)
             let color = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha:1)
             button.setTitleColor(color, for: .normal)
             button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+            button.addTarget(self, action: #selector(handleSendButtonTap), for: .touchUpInside)
             return button
         }()
         var contact: User?
         var chat: ChatClient = ChatClient()
     
+    
+        var user: User? {
+            didSet {
+                observeMessages()
+            }
+        }
         override func viewDidLoad() {
             
             super.viewDidLoad()
-            navigationItem.title = contact!.name!
+            if user == nil {
+                navigationItem.title = contact!.name!
+            }
             setupTableView()
             view.addSubview(sendBarContainer)
             view.addConstraintsWithFormat("H:|[v0]|", views: sendBarContainer)
@@ -60,12 +69,18 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             //listen for keyboard events
             NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotifications), name: UIResponder.keyboardWillShowNotification , object: nil)
             
-             observeMessages()
+            // observeMessages()
+            if user == nil {
+                observeMessages()
+            }
         }
  
         @objc func handleSendButtonTap() {
             if let msg = sendBarTF.text, !msg.isEmpty {
                 send(text: msg)
+                sendBarTF.text = ""
+            } else {
+                print("no send send")
             }
         }
         
@@ -125,7 +140,7 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
             sendBarContainer.addSubview(sendBarTF)
             sendBarContainer.addSubview(sendButton)
             sendBarContainer.addSubview(topBorderView)
-            sendButton.addTarget(self, action: #selector(handleSendButtonTap), for: .touchUpInside)
+           
             
             sendBarContainer.addConstraintsWithFormat("H:|-8-[v0][v1(60)]|", views: sendBarTF, sendButton)
             sendBarContainer.addConstraintsWithFormat("V:|-8-[v0]|", views: sendBarTF)
@@ -142,33 +157,11 @@ class InboxVC: UIViewController , UITableViewDelegate, UITableViewDataSource {
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                 let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as?
                 MessageCell
-                
-                if let toId = messages[indexPath.row].toId {
-                    let users = Database.database().reference().child("users").child(toId)
-                    users.observeSingleEvent(of: .value) { snapshot in
-                        if let dictionary = snapshot.value as? [String: Any]{
-                            let name = dictionary["name"]! as! String
-                            DispatchQueue.main.async {
-                                cell?.recipient = name
-                            }
-                        }
-                    }
-                }
-            
-                if let userId = Auth.auth().currentUser?.uid {
-                    let users = Database.database().reference().child("users").child(userId)
-                    users.observeSingleEvent(of: .value) { snapshot in
-                        if let dictionary = snapshot.value as? [String: Any]{
-                            let name = dictionary["name"]! as! String
-                            DispatchQueue.main.async {
-                                print(name)
-                                cell?.user = name
-                            }
-                        }
-                    }
-                }
                cell?.contact = contact
                cell?.message = messages[indexPath.row]
             return cell!
         }
 }
+
+
+//want to obser all messages for the current user that is logged in

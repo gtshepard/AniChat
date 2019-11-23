@@ -12,6 +12,10 @@ import UIKit
 extension LoginVC {
     
     @objc func loginOrRegister() {
+        
+        home = RecentMessagesVC()
+        loginRegisterButton.isEnabled = false
+    
         if loginSegmentControl.selectedSegmentIndex == 0 {
             handleLogin()
         } else {
@@ -30,11 +34,12 @@ extension LoginVC {
               guard let avatarName = self.avatar else { return }
               loginClient.register(name: username, email: email, password: password, avatar: avatarName) { [weak self] in
                    guard let strongSelf = self else { return }
-                   let home = RecentMessagesVC()
-                   strongSelf.navigationController?.pushViewController(home, animated: true)
+                    strongSelf.navigationController?.pushViewController(strongSelf.home!, animated: true)
+                strongSelf.loginRegisterButton.isEnabled = true
               }
           } else {
               alert(message: "Please Select An Avatar")
+              loginRegisterButton.isEnabled = true
           }
       }
     
@@ -49,8 +54,8 @@ extension LoginVC {
                 return
             }
             
-            let home = RecentMessagesVC()
-            strongSelf.navigationController?.pushViewController(home, animated: true)
+            strongSelf.navigationController?.pushViewController(strongSelf.home!, animated: true)
+            strongSelf.loginRegisterButton.isEnabled = true
         }
     }
 }

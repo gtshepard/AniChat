@@ -10,21 +10,7 @@ import Foundation
 import Firebase
 
 class LoginClient {
-    
-    enum DatabasePath {
-        static let reference = Database.database().reference()
-        static let users = reference.child("users")
-        
-        case user(String)
        
-        var user: DatabaseReference {
-            switch self {
-            case .user(let uid):
-                return DatabasePath.users.child(uid)
-            }
-        }
-    }
-    
     enum NoError {
         case errorless(Error?)
         var errorless: Bool {
@@ -37,31 +23,12 @@ class LoginClient {
         }
     }
     
-    enum Account {
-        static let reference = Auth.auth()
-        static let myUid = reference.currentUser?.uid
-    }
-    
-    
-    enum DataStore {
-        static let reference = Storage.storage().reference()
-        case uploadPhoto(String)
-        
-        
-        var photo: StorageReference {
-            switch self {
-            case .uploadPhoto(let photoName):
-                return DataStore.reference.child(photoName)
-           
-            }
-        }
-    }
-    
     func register(name: String, email: String, password: String, avatar: String, completion: @escaping ()-> Void){
         
-        let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
-        let dataPath = DataStore.uploadPhoto(avatar).photo
-      
+        //let imageData = UIImage(imageLiteralResourceName: avatar).pngData()!
+        let imageData = UIImage(imageLiteralResourceName: avatar).jpegData(compressionQuality: 0.1)!
+        let dataPath = Storage.storage().reference().child(avatar)
+    
         dataPath.putData(imageData, metadata: nil) { [weak self] _, error in
             guard NoError.errorless(error).errorless else { return }
             guard let strongSelf = self else { return }
@@ -77,22 +44,19 @@ class LoginClient {
     }
     
     func register(name: String, email: String, password: String,avatarUrl: URL, complete: @escaping ()-> Void) {
-        
-        Account.reference.createUser(withEmail: email , password: password) { authResult, error in
-            
+        Auth.auth().createUser(withEmail: email , password: password) { authResult, error in
             guard NoError.errorless(error).errorless else { return }
             let userInfo = ["name": name, "email": email, "avatarUrl": (avatarUrl.absoluteString as String)] as [String: Any]
-            guard let myUid = Account.myUid else { return }
-           
-            let user = DatabasePath.user(myUid).user.updateChildValues(userInfo) { error, _ in
+            guard let myUid = Auth.auth().currentUser?.uid else { return }
+            Database.database().reference().child("users").child(myUid).updateChildValues(userInfo) { error, _ in
                 guard NoError.errorless(error).errorless else { return }
                 complete()
             }
         }
     }
-    
+
     func login(email: String, password: String, completion: @escaping (String?)->Void) {
-        Account.reference.signIn(withEmail: email, password: password) { result, error in
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if error != nil {
                 completion(error?.localizedDescription)
                 return
@@ -100,7 +64,24 @@ class LoginClient {
             completion(nil)
         }
     }
-    func logout() {
-        try! Account.reference.signOut()
+    
+    func logout(completion: @escaping ()->Void) {
+        try! Auth.auth().signOut()
+        completion()
+    }
+    
+    func fetchUserProfile(result: @escaping (User)->Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value){ snapshot in
+            
+            if let userInfo = snapshot.value as? [String: Any] {
+                let user = User()
+                user.id = uid
+                user.name = (userInfo["name"] as! String)
+                user.email = (userInfo["email"] as! String)
+                user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
+                result(user)
+            }
+        }
     }
 }

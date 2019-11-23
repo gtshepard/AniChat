@@ -40,21 +40,7 @@ class ContactCell: UITableViewCell {
             guard let contact = contact  else { return }
             nameLabel.text = contact.name!
             emailLabel.text = contact.email!
-            
-            let session = URLSession.shared
-            var task = session.dataTask(with: contact.avatar!) {[weak self]data, response, error in
-                guard let strongSelf = self else { return }
-                DispatchQueue.main.async {
-                    strongSelf.profileImageView.image = UIImage(data: data!)
-                }
-            }
-                   
-            
-                   task.resume()
-       
-            
-            
-            
+            profileImageView.loadImageUsingCache(urlString: contact.avatar!.absoluteString)
         }
     }
 

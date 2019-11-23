@@ -16,13 +16,15 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-
-    var messages :[Int] = []
-    var chat: LoginClient = LoginClient()
+    
+    var messagesDictionary = [String: Message]()
+    var messages :[Message] = []
+    var login: LoginClient = LoginClient()
+    var chat: ChatClient = ChatClient()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(recentMessageTV)
-        fetchMessages()
         recentMessageTV.reloadData()
         
         let recentMessagesConstraints = [
@@ -48,15 +50,38 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: newMessageImage, style: .plain, target: self, action: #selector(showContacts))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
+        //TODO: bug fix, login hit wuth a bad email email, button disables
+        setupNavBar()
+   
+ 
+        chat.messagesForUserObserver() { [weak self] message in
+            guard let strongSelf = self else { return }
+           
+            if message.toId! != Auth.auth().currentUser?.uid {
+                guard let toId = message.toId else { return }
+                strongSelf.messagesDictionary[toId] = message
+                strongSelf.messages = Array(strongSelf.messagesDictionary.values)
+                strongSelf.messages = strongSelf.messages.sorted { $0.date! > $1.date! }
+                strongSelf.recentMessageTV.reloadData()
+            }
+        }
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func setupNavBar() {
+        login.fetchUserProfile() {[weak self] user in
+            guard let strongSelf = self else { return }
+            DispatchQueue.main.async {
+                strongSelf.messagesDictionary.removeAll()
+                strongSelf.messages.removeAll()
+                strongSelf.recentMessageTV.reloadData()
+                strongSelf.navigationItem.title = user.name
+            }
+        }
     }
-
     @objc func logout() {
-        chat.logout()
-        navigationController?.popViewController(animated: true)
+        login.logout() { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func showContacts(){
@@ -66,14 +91,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         present(contactVC, animated: true, completion: nil)
     }
     
-    func fetchMessages() {
-        Database.database().reference().child("users").observe(.childAdded){ snapshot in
-            if let user = snapshot.value as? [String: Any] {
-              //append to table view data source 
-            }
-        }
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
@@ -86,13 +103,27 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "ID", for: indexPath) as? RecentMessageCell
 
-        //cell?.friend = friends[indexPath.row]
+        cell?.message = messages[indexPath.row]
         return cell!
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    let friendMessengerViewController = FriendMessengerViewController()
-//    friendMessengerViewController.friend = friends[indexPath.row]
-//    navigationController?.pushViewController(friendMessengerViewController, animated: true)
+
+            guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else { return }
+            let ref = Database.database().reference().child("users").child(chatPartnerId)
+            ref.observeSingleEvent(of: .value){ [weak self] snapshot in
+                print(snapshot)
+                guard let strongSelf = self else { return }
+                guard let  userInfo = snapshot.value as? [String: Any] else { return }
+                let user = User()
+                user.id = snapshot.key
+                user.name = (userInfo["name"] as! String)
+                user.email = (userInfo["email"] as! String)
+                user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
+                let inbox = InboxVC()
+                inbox.contact = user
+                inbox.user = user
+                strongSelf.navigationController!.pushViewController(inbox, animated: true)
+            }
     }
 }
