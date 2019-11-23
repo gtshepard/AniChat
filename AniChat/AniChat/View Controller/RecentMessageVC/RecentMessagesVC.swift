@@ -109,21 +109,23 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-            guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else { return }
-            let ref = Database.database().reference().child("users").child(chatPartnerId)
-            ref.observeSingleEvent(of: .value){ [weak self] snapshot in
-                print(snapshot)
-                guard let strongSelf = self else { return }
-                guard let  userInfo = snapshot.value as? [String: Any] else { return }
-                let user = User()
-                user.id = snapshot.key
-                user.name = (userInfo["name"] as! String)
-                user.email = (userInfo["email"] as! String)
-                user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
-                let inbox = InboxVC()
-                inbox.contact = user
-                inbox.user = user
-                strongSelf.navigationController!.pushViewController(inbox, animated: true)
-            }
+//            guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else { return }
+//            let ref = Database.database().reference().child("users").child(chatPartnerId)
+//            ref.observeSingleEvent(of: .value){ [weak self] snapshot in
+//                print(snapshot)
+//                guard let strongSelf = self else { return }
+//                guard let  userInfo = snapshot.value as? [String: Any] else { return }
+//                let user = User()
+//                user.id = snapshot.key
+//                user.name = (userInfo["name"] as! String)
+//                user.email = (userInfo["email"] as! String)
+//                user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
+//                let inbox = InboxVC()
+//                inbox.contact = user
+//                inbox.user = user
+//                strongSelf.navigationController!.pushViewController(inbox, animated: true)
+//            }
+           let inbox = ContactInboxVC(collectionViewLayout: UICollectionViewFlowLayout())
+           navigationController!.pushViewController(inbox, animated: true)
     }
 }

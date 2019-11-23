@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8512F7162389ED57006D3D32 /* ContactInboxVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512F7152389ED57006D3D32 /* ContactInboxVC.swift */; };
 		851458C0237E6DC200FD3212 /* ChatClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851458BF237E6DC200FD3212 /* ChatClient.swift */; };
 		8564FA61237F326F00EE4BC7 /* ChatClient+ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */; };
 		8564FA63237F350100EE4BC7 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA62237F350100EE4BC7 /* LoginClient.swift */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		137F997638EB4331011ED339 /* Pods-AniChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AniChat.debug.xcconfig"; path = "Target Support Files/Pods-AniChat/Pods-AniChat.debug.xcconfig"; sourceTree = "<group>"; };
 		679D660CCBA9906D7F83A013 /* Pods_AniChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AniChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8512F7152389ED57006D3D32 /* ContactInboxVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactInboxVC.swift; sourceTree = "<group>"; };
 		851458BF237E6DC200FD3212 /* ChatClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatClient.swift; sourceTree = "<group>"; };
 		8564FA60237F326F00EE4BC7 /* ChatClient+ContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatClient+ContactVC.swift"; sourceTree = "<group>"; };
 		8564FA62237F350100EE4BC7 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			children = (
 				85A0D12F237E02F0003F77A9 /* InboxVC.swift */,
 				8564FA72237F6EA400EE4BC7 /* InboxVC+Ext */,
+				8512F7152389ED57006D3D32 /* ContactInboxVC.swift */,
 			);
 			path = InboxVC;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				8564FA61237F326F00EE4BC7 /* ChatClient+ContactVC.swift in Sources */,
 				85A0D127237DEA0A003F77A9 /* User.swift in Sources */,
 				85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */,
+				8512F7162389ED57006D3D32 /* ContactInboxVC.swift in Sources */,
 				85A0D120237DE5F7003F77A9 /* RecentMessagesVC.swift in Sources */,
 				8564FA63237F350100EE4BC7 /* LoginClient.swift in Sources */,
 				85A0D125237DE9A2003F77A9 /* Message.swift in Sources */,
