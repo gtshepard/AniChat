@@ -246,7 +246,6 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
            
         let userMessagesRef = Database.database().reference().child("user-messages").child(uid).child(toId)
            userMessagesRef.observe(.childAdded) {[weak self] snapshot in
-              // print(snapshot)
                guard let strongSelf = self else { return }
                let messageId = snapshot.key
                let messageRef = Database.database().reference().child("messages").child(messageId)
@@ -258,19 +257,15 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
                    message.text = (messageInfo["text"] as! String)
                    let date = (messageInfo["date"] as! NSNumber)
                    message.date = Date.init(timeIntervalSince1970: TimeInterval(truncating: date))
-                   
-                    if message.chatPartnerId() == strongSelf.user?.id {
-                       print(message)
-                       strongSelf.messages.append(message)
-                           DispatchQueue.main.async {
-                           strongSelf.collectionView.reloadData()
-                       }
+    
+                   strongSelf.messages.append(message)
+                       DispatchQueue.main.async {
+                       strongSelf.collectionView.reloadData()
                    }
-                
-                 
                }
            }
        }
+    
     func send(text: String){
           guard let contact = self.user else { return }
           chat.send(text: text , recipient: contact)
