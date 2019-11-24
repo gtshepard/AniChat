@@ -15,7 +15,6 @@
 		8564FA65237F579600EE4BC7 /* Alert+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA64237F579600EE4BC7 /* Alert+UIViewController.swift */; };
 		8564FA67237F61BE00EE4BC7 /* LoginClient+LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA66237F61BE00EE4BC7 /* LoginClient+LoginVC.swift */; };
 		8564FA6B237F62D600EE4BC7 /* Alert+LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA6A237F62D600EE4BC7 /* Alert+LoginVC.swift */; };
-		8564FA76237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8564FA75237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift */; };
 		858D4B172384E0CA00DD7D3F /* Ext+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858D4B162384E0CA00DD7D3F /* Ext+UIImageView.swift */; };
 		85A0D104237DB433003F77A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D103237DB433003F77A9 /* AppDelegate.swift */; };
 		85A0D106237DB433003F77A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D105237DB433003F77A9 /* SceneDelegate.swift */; };
@@ -30,7 +29,6 @@
 		85A0D127237DEA0A003F77A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D126237DEA0A003F77A9 /* User.swift */; };
 		85A0D129237DEA56003F77A9 /* ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D128237DEA56003F77A9 /* ContactVC.swift */; };
 		85A0D12B237DEBA1003F77A9 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D12A237DEBA1003F77A9 /* ContactCell.swift */; };
-		85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D12F237E02F0003F77A9 /* InboxVC.swift */; };
 		85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D131237E073C003F77A9 /* MessageCell.swift */; };
 		85A0D135237E08A0003F77A9 /* Ext+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D134237E08A0003F77A9 /* Ext+UIView.swift */; };
 		85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A0D136237E0A50003F77A9 /* Ext+Date.swift */; };
@@ -49,7 +47,6 @@
 		8564FA64237F579600EE4BC7 /* Alert+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+UIViewController.swift"; sourceTree = "<group>"; };
 		8564FA66237F61BE00EE4BC7 /* LoginClient+LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginClient+LoginVC.swift"; sourceTree = "<group>"; };
 		8564FA6A237F62D600EE4BC7 /* Alert+LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+LoginVC.swift"; sourceTree = "<group>"; };
-		8564FA75237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatClient+InboxVC.swift"; sourceTree = "<group>"; };
 		858D4B162384E0CA00DD7D3F /* Ext+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIImageView.swift"; sourceTree = "<group>"; };
 		85A0D100237DB433003F77A9 /* AniChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AniChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A0D103237DB433003F77A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +63,6 @@
 		85A0D126237DEA0A003F77A9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		85A0D128237DEA56003F77A9 /* ContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactVC.swift; sourceTree = "<group>"; };
 		85A0D12A237DEBA1003F77A9 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
-		85A0D12F237E02F0003F77A9 /* InboxVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxVC.swift; sourceTree = "<group>"; };
 		85A0D131237E073C003F77A9 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		85A0D134237E08A0003F77A9 /* Ext+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+UIView.swift"; sourceTree = "<group>"; };
 		85A0D136237E0A50003F77A9 /* Ext+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext+Date.swift"; sourceTree = "<group>"; };
@@ -130,22 +126,12 @@
 			path = "ContactVC+Ext";
 			sourceTree = "<group>";
 		};
-		8564FA71237F6E9400EE4BC7 /* InboxVC */ = {
+		8564FA71237F6E9400EE4BC7 /* ContactInboxVC */ = {
 			isa = PBXGroup;
 			children = (
-				85A0D12F237E02F0003F77A9 /* InboxVC.swift */,
-				8564FA72237F6EA400EE4BC7 /* InboxVC+Ext */,
 				8512F7152389ED57006D3D32 /* ContactInboxVC.swift */,
 			);
-			path = InboxVC;
-			sourceTree = "<group>";
-		};
-		8564FA72237F6EA400EE4BC7 /* InboxVC+Ext */ = {
-			isa = PBXGroup;
-			children = (
-				8564FA75237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift */,
-			);
-			path = "InboxVC+Ext";
+			path = ContactInboxVC;
 			sourceTree = "<group>";
 		};
 		8564FA73237F6EB800EE4BC7 /* RecentMessageVC */ = {
@@ -225,7 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				8564FA73237F6EB800EE4BC7 /* RecentMessageVC */,
-				8564FA71237F6E9400EE4BC7 /* InboxVC */,
+				8564FA71237F6E9400EE4BC7 /* ContactInboxVC */,
 				8564FA6C237F6D7100EE4BC7 /* ContactVC */,
 				8564FA69237F624300EE4BC7 /* LoginVC */,
 			);
@@ -388,10 +374,8 @@
 				85A0D129237DEA56003F77A9 /* ContactVC.swift in Sources */,
 				85A0D122237DE88C003F77A9 /* RecentMessageCell.swift in Sources */,
 				85A0D10E237DB433003F77A9 /* AniChat.xcdatamodeld in Sources */,
-				8564FA76237F6EEC00EE4BC7 /* ChatClient+InboxVC.swift in Sources */,
 				85A0D108237DB433003F77A9 /* LoginVC.swift in Sources */,
 				85A0D132237E073C003F77A9 /* MessageCell.swift in Sources */,
-				85A0D130237E02F0003F77A9 /* InboxVC.swift in Sources */,
 				85A0D137237E0A50003F77A9 /* Ext+Date.swift in Sources */,
 				858D4B172384E0CA00DD7D3F /* Ext+UIImageView.swift in Sources */,
 				851458C0237E6DC200FD3212 /* ChatClient.swift in Sources */,
