@@ -29,7 +29,8 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     var messages = [Message]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .white
         collectionView.register(ContactMessageCell.self, forCellWithReuseIdentifier: cellId)
         inputTextField.delegate = self
@@ -84,26 +85,40 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
         seperatorLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
     }
-    
+    private func estimatedFrameForText(text: String) -> CGRect {
+        //pcik a hieght valeu that is arbitrairly large
+    //width of ContactMessage Cell
+       let size = CGSize(width: 200, height: 10000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 16)], context: nil)
+        
+    }
+     
     @objc func handleSend(){
         print(inputTextField.text)
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleSend()
         return true
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: view.frame.height, height: 80)
+        var height: CGFloat = 80
+        if let text = messages[indexPath.row].text {
+            height = estimatedFrameForText(text: text).height + 40
+        }
+        return CGSize(width: view.frame.width, height: height)
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return messages.count
       }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-     
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ContactMessageCell
+        let message = messages[indexPath.row]
+        cell.messageTextView.text = message.text!
+        cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: message.text!).width + 30
         return cell
     }
     
