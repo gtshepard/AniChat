@@ -264,9 +264,9 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
 
         let logoConstraint = [
             logo.centerXAnchor.constraint(equalTo: loginSegmentControl.centerXAnchor),
-            logo.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -80),
-            logo.widthAnchor.constraint(equalToConstant: 80),
-            logo.heightAnchor.constraint(equalToConstant: 80)
+            logo.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -100),
+            logo.widthAnchor.constraint(equalToConstant: 120),
+            logo.heightAnchor.constraint(equalToConstant: 120)
         ]
               
         NSLayoutConstraint.activate(logoConstraint)
@@ -279,10 +279,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect)
         let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
      
-       // containerViewBottomAnchor?.constant = keyboardFrame.height/3
-        print(keyboardFrame.height)
         containerViewCenterYAnchor?.constant = -keyboardFrame.height/7
-       // containerViewBottomAnchor?.isActive = true
         UIView.animate(withDuration: keyboardDuration) {[weak self] in
             guard let strongSelf = self else { return }
             strongSelf.view.layoutIfNeeded()
