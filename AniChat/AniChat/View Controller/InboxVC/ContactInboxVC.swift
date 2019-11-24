@@ -10,10 +10,11 @@ import UIKit
 import Firebase
 class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
 
-    let inputTextField: UITextField = {
+    lazy var inputTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter Message..."
-        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.frame = CGRect(x: 0, y: 0, width: view.frame.width,height: 50)
+        textField.delegate = self
         return textField
     }()
  
@@ -29,11 +30,39 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     lazy var inputContianerView: UIView = {
         let containerView = UIView()
         containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
-        containerView.backgroundColor = .lightGray
-        let textField = UITextField()
-        textField.placeholder = "Enter Some Text"
-        containerView.addSubview(textField)
-        textField.frame = CGRect(x: 0, y: 0, width: view.frame.width,height: 50)
+        containerView.backgroundColor = .white
+//        let textField = UITextField()
+//        textField.placeholder = "Enter Some Text"
+        containerView.addSubview(self.inputTextField)
+      //  textField.frame = CGRect(x: 0, y: 0, width: view.frame.width,height: 50)
+
+        
+        //send button
+        let sendButton = UIButton(type: .system)
+        sendButton.setTitle("Send", for: .normal)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
+        containerView.addSubview(sendButton)
+               
+        sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+        sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
+               
+//        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8).isActive = true
+//        inputTextField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+//        inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor).isActive = true
+//        inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
+        //separator line
+        let seperatorLineView = UIView()
+        seperatorLineView.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
+        seperatorLineView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(seperatorLineView)
+           
+        seperatorLineView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+        seperatorLineView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        seperatorLineView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
+        seperatorLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         return containerView
     }()
     
@@ -54,8 +83,8 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     var containerViewBottomAnchor: NSLayoutConstraint?
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
-        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+       // collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .white
         collectionView.register(ContactMessageCell.self, forCellWithReuseIdentifier: cellId)
@@ -126,12 +155,6 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
         sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
-        
-        //text field
-//        let inputTextField = UITextField()
-//        inputTextField.placeholder = "Enter Message..."
-//        inputTextField.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(inputTextField)
         
         inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
