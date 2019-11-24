@@ -50,14 +50,12 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: newMessageImage, style: .plain, target: self, action: #selector(showContacts))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
-        //TODO: bug fix, login hit wuth a bad email email, button disables
+
         setupNavBar()
-   
+        
         chat.messagesForUserObserver() { [weak self] message in
             guard let strongSelf = self else { return }
-           
             if let chatPartnerId = message.chatPartnerId() {
-               // guard let toId = message.toId else { return }
                 strongSelf.messagesDictionary[chatPartnerId] = message
                 strongSelf.messages = Array(strongSelf.messagesDictionary.values)
                 print("Array: ", strongSelf.messages.first)

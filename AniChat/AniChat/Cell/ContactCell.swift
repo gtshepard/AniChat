@@ -29,14 +29,12 @@ class ContactCell: UITableViewCell {
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        //imageView.setRoundedView(roundedView: imageView, toDiameter: 30)
+        imageView.backgroundColor = .clear
         return imageView
     }()
     
-
     var contact: User?{
         didSet{
-            
             guard let contact = contact  else { return }
             nameLabel.text = contact.name!
             emailLabel.text = contact.email!

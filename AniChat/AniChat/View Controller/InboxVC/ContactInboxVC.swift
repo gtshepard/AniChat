@@ -25,6 +25,30 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
             observeMessages()
         }
     }
+    
+    lazy var inputContianerView: UIView = {
+        let containerView = UIView()
+        containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        containerView.backgroundColor = .lightGray
+        let textField = UITextField()
+        textField.placeholder = "Enter Some Text"
+        containerView.addSubview(textField)
+        textField.frame = CGRect(x: 0, y: 0, width: view.frame.width,height: 50)
+        return containerView
+    }()
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            return inputContianerView
+        }
+    }
+
+    override var canBecomeFirstResponder: Bool {
+        get {
+            return true
+        }
+    }
+    
     var chat: ChatClient = ChatClient()
     var messages = [Message]()
     var containerViewBottomAnchor: NSLayoutConstraint?
@@ -35,9 +59,17 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .white
         collectionView.register(ContactMessageCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.keyboardDismissMode = .interactive
         inputTextField.delegate = self
-        setupInputComponents()
-        setupKeyboardObserver()
+        
+        
+//        setupInputComponents()
+//        setupKeyboardObserver()
+    }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
   
     func setupKeyboardObserver() {
@@ -48,14 +80,23 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     
     @objc func handleKeyboardWillShow(notification: NSNotification){
         let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect)
+        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
         containerViewBottomAnchor?.constant = -keyboardFrame.height
-       // print()
+        UIView.animate(withDuration: keyboardDuration) {[weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.view.layoutIfNeeded()
+        }
+    
     }
     @objc func handleKeyboardWillHide(notification: NSNotification){
-           let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect)
-           containerViewBottomAnchor?.constant = 0 
-          // print()
-       }
+      
+         let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+         containerViewBottomAnchor?.constant = 0
+         UIView.animate(withDuration: keyboardDuration) {[weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.view.layoutIfNeeded()
+         }
+    }
     
 
     
