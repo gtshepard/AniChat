@@ -21,7 +21,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var messages :[Message] = []
     var login: LoginClient = LoginClient()
     var chat: ChatClient = ChatClient()
-    
+    var timer: Timer?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(recentMessageTV)
@@ -53,7 +53,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         //TODO: bug fix, login hit wuth a bad email email, button disables
         setupNavBar()
    
- 
         chat.messagesForUserObserver() { [weak self] message in
             guard let strongSelf = self else { return }
            
@@ -62,11 +61,13 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 strongSelf.messagesDictionary[toId] = message
                 strongSelf.messages = Array(strongSelf.messagesDictionary.values)
                 strongSelf.messages = strongSelf.messages.sorted { $0.date! > $1.date! }
-      
-                Timer.scheduledTimer(timeInterval: 1, target: strongSelf, selector:#selector(strongSelf.handleReload) , userInfo: nil, repeats: false)
+                strongSelf.timer?.invalidate()
+                strongSelf.timer = Timer.scheduledTimer(timeInterval: 0.1, target: strongSelf, selector:#selector(strongSelf.handleReload) , userInfo: nil, repeats: false)
             }
         }
     }
+
+    
     @objc func handleReload(){
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
@@ -85,6 +86,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
         }
     }
+    
     @objc func logout() {
         login.logout() { [weak self] in
             guard let strongSelf = self else { return }
@@ -117,23 +119,20 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-//            guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else { return }
-//            let ref = Database.database().reference().child("users").child(chatPartnerId)
-//            ref.observeSingleEvent(of: .value){ [weak self] snapshot in
-//                print(snapshot)
-//                guard let strongSelf = self else { return }
-//                guard let  userInfo = snapshot.value as? [String: Any] else { return }
-//                let user = User()
-//                user.id = snapshot.key
-//                user.name = (userInfo["name"] as! String)
-//                user.email = (userInfo["email"] as! String)
-//                user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
-//                let inbox = InboxVC()
-//                inbox.contact = user
-//                inbox.user = user
-//                strongSelf.navigationController!.pushViewController(inbox, animated: true)
-//            }
-           let inbox = ContactInboxVC(collectionViewLayout: UICollectionViewFlowLayout())
-           navigationController!.pushViewController(inbox, animated: true)
+            guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else { return }
+            let ref = Database.database().reference().child("users").child(chatPartnerId)
+            ref.observeSingleEvent(of: .value){ [weak self] snapshot in
+                print(snapshot)
+                guard let strongSelf = self else { return }
+                guard let  userInfo = snapshot.value as? [String: Any] else { return }
+                let user = User()
+                user.id = snapshot.key
+                user.name = (userInfo["name"] as! String)
+                user.email = (userInfo["email"] as! String)
+                user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
+                let inbox = ContactInboxVC(collectionViewLayout: UICollectionViewFlowLayout())
+                inbox.user = user
+                strongSelf.navigationController!.pushViewController(inbox, animated: true)
+            }
     }
 }

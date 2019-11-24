@@ -46,6 +46,7 @@ class RecentMessageCell: UITableViewCell {
             let imageView = UIImageView()
             imageView.translatesAutoresizingMaskIntoConstraints = false
             imageView.contentMode = .scaleAspectFill
+            imageView.backgroundColor = .clear
             //imageView.setRoundedView(roundedView: imageView, toDiameter: 30)
             return imageView
         }()
