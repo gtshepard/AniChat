@@ -88,27 +88,14 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         collectionView.backgroundColor = .clear
         return collectionView
     }()
-    
-    let logoContainer: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
-        return view
-    }()
-    
+        
     let logo: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.rounded(roundedView: imageView, toDiameter: 20)
         return imageView
     }()
-    
-    let logoLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
+        
     var navigationBar: UINavigationBar!
     var backgroundView: UIImageView!
     var stackView: UIStackView!
@@ -292,14 +279,10 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
           
           if index == 0 {
              avatarCollectionView.isHidden = true
-            logoContainer.isHidden = false
             logo.isHidden = false
-            logoLabel.isHidden = false
           } else {
              avatarCollectionView.isHidden = false
-             logoContainer.isHidden = true
              logo.isHidden = true
-             logoLabel.isHidden = true
           }
         
           loginRegisterButton.setTitle(title, for: .normal)
@@ -335,7 +318,6 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
   
-        
         let collectoionCell = collectionView.cellForItem(at: indexPath) as? AvatarCell
         guard let cell = collectoionCell else { return }
 
@@ -343,8 +325,6 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             print("im selected")
             cell.contentView.layer.borderWidth = 3
             cell.contentView.layer.borderColor = UIColor.systemBlue.cgColor
-            //guard let image = cell.avatarImageView?.image else { return }
-            //avatarImage = image
             avatar = avatars[indexPath.row]
             didSelectProfile = true
         }

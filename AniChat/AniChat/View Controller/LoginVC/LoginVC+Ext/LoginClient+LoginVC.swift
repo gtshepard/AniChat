@@ -50,6 +50,7 @@ extension LoginVC {
             guard let strongSelf = self else { return }
             
             if error != nil {
+                strongSelf.loginRegisterButton.isEnabled = true
                 strongSelf.alert(message: "Invalid Username or Password")
                 return
             }
