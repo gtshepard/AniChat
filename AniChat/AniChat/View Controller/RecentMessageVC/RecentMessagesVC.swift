@@ -62,9 +62,17 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 strongSelf.messagesDictionary[toId] = message
                 strongSelf.messages = Array(strongSelf.messagesDictionary.values)
                 strongSelf.messages = strongSelf.messages.sorted { $0.date! > $1.date! }
-                strongSelf.recentMessageTV.reloadData()
+      
+                Timer.scheduledTimer(timeInterval: 1, target: strongSelf, selector:#selector(strongSelf.handleReload) , userInfo: nil, repeats: false)
             }
         }
+    }
+    @objc func handleReload(){
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.recentMessageTV.reloadData()
+        }
+
     }
     func setupNavBar() {
         login.fetchUserProfile() {[weak self] user in
