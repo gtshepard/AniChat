@@ -56,14 +56,15 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         chat.messagesForUserObserver() { [weak self] message in
             guard let strongSelf = self else { return }
            
-            if message.toId! != Auth.auth().currentUser?.uid {
+          //  if message.toId! != Auth.auth().currentUser?.uid {
                 guard let toId = message.toId else { return }
                 strongSelf.messagesDictionary[toId] = message
                 strongSelf.messages = Array(strongSelf.messagesDictionary.values)
+                print("Array: ", strongSelf.messages.first)
                 strongSelf.messages = strongSelf.messages.sorted { $0.date! > $1.date! }
                 strongSelf.timer?.invalidate()
                 strongSelf.timer = Timer.scheduledTimer(timeInterval: 0.1, target: strongSelf, selector:#selector(strongSelf.handleReload) , userInfo: nil, repeats: false)
-            }
+            //}
         }
     }
 
