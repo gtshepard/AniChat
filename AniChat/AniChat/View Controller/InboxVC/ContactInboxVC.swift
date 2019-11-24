@@ -25,7 +25,7 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
             observeMessages()
         }
     }
-    
+    var chat: ChatClient = ChatClient()
     var messages = [Message]()
     var containerViewBottomAnchor: NSLayoutConstraint?
     override func viewDidLoad() {
@@ -119,7 +119,7 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     }
      
     @objc func handleSend(){
-        print(inputTextField.text)
+        send(text: inputTextField.text!)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -203,4 +203,10 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
                }
            }
        }
+    func send(text: String){
+          guard let contact = self.user else { return }
+          chat.send(text: text , recipient: contact)
+          inputTextField.text = ""
+          collectionView.reloadData()
+      }
 }
