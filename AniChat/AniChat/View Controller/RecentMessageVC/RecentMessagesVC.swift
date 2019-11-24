@@ -41,7 +41,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         recentMessageTV.dataSource = self
         recentMessageTV.register(RecentMessageCell.self, forCellReuseIdentifier: "ID")
         
-        let newMessageImage = UIImage(imageLiteralResourceName: "new_message")
+        let newMessageImage = UIImage(imageLiteralResourceName: "new-message")
         let logoutImage = UIImage(imageLiteralResourceName: "logout")
        
         navigationItem.hidesBackButton = true
