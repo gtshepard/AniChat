@@ -87,9 +87,9 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
         sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
         
         //text field
-        let inputTextField = UITextField()
-        inputTextField.placeholder = "Enter Message..."
-        inputTextField.translatesAutoresizingMaskIntoConstraints = false
+//        let inputTextField = UITextField()
+//        inputTextField.placeholder = "Enter Message..."
+//        inputTextField.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(inputTextField)
         
         inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8).isActive = true
@@ -119,7 +119,9 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     }
      
     @objc func handleSend(){
-        send(text: inputTextField.text!)
+        guard let text = inputTextField.text else { return }
+        print(text)
+        send(text: text)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
