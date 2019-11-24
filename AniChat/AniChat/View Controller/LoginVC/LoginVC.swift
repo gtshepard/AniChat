@@ -257,36 +257,16 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
  
     
     func setupLogo() {
-        view.addSubview(logoContainer)
-        logoContainer.addSubview(logo)
-        logoContainer.addSubview(logoLabel)
-        logoContainer.backgroundColor = .lightGray
-        logoContainer.isHidden = true
-        logoContainer.rounded(roundedView: logoContainer, toDiameter: 20)
-        logo.backgroundColor = .clear
+        view.addSubview(logo)
         logo.isHidden = true
-        logo.image = UIImage(imageLiteralResourceName: "024-duck")
-        logoLabel.isHidden = true
-        logoLabel.text = "Welcome"
-        logoLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        logoLabel.textColor = .white
-        logoLabel.textAlignment = .center
-        
+        logo.backgroundColor = .clear
+        logo.image = UIImage(imageLiteralResourceName: "002-dog")
+
         let logoConstraint = [
-            logoContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoContainer.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -120),
-            logoContainer.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1/2),
-            logoContainer.heightAnchor.constraint(equalToConstant: 160),
-            
-            logo.centerXAnchor.constraint(equalTo: logoContainer.centerXAnchor),
-            logo.centerYAnchor.constraint(equalTo: logoContainer.centerYAnchor, constant: -15),
-            logo.widthAnchor.constraint(equalTo: logoContainer.widthAnchor, multiplier: 2/3),
-            logo.heightAnchor.constraint(equalTo: logoContainer.heightAnchor, multiplier: 2/3),
-          
-            logoLabel.centerXAnchor.constraint(equalTo: logoContainer.centerXAnchor),
-            logoLabel.centerYAnchor.constraint(equalTo: logoContainer.centerYAnchor, constant: 60),
-            logoLabel.widthAnchor.constraint(equalTo: logoContainer.widthAnchor, multiplier: 5/6),
-            logoLabel.heightAnchor.constraint(equalTo: logoContainer.heightAnchor, multiplier: 1/6)
+            logo.centerXAnchor.constraint(equalTo: loginSegmentControl.centerXAnchor),
+            logo.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -80),
+            logo.widthAnchor.constraint(equalToConstant: 80),
+            logo.heightAnchor.constraint(equalToConstant: 80)
         ]
               
         NSLayoutConstraint.activate(logoConstraint)
