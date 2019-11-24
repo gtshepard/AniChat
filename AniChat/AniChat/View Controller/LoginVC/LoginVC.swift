@@ -85,7 +85,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         let collectionView = UICollectionView(frame: CGRect.zero , collectionViewLayout: UICollectionViewFlowLayout.init())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
      
-        collectionView.backgroundColor = .red
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
     
@@ -130,6 +130,9 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
     var avatarImage: UIImage?
     var didSelectProfile: Bool?
     var loginClient: LoginClient = LoginClient()
+    var containerViewBottomAnchor: NSLayoutConstraint?
+    var containerViewCenterYAnchor: NSLayoutConstraint?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "AniChat"
@@ -146,20 +149,23 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         containerView.addSubview(passwordTextField)
 
         containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        containerViewCenterYAnchor = containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        containerViewCenterYAnchor?.isActive = true
+        
         containerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant:  -24).isActive = true
         containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: 150)
         containerViewHeightConstraint?.isActive = true
 
-
+        
         let loginRegisterButtonContraints = [
             loginRegisterButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             loginRegisterButton.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 12),
             loginRegisterButton.widthAnchor.constraint(equalTo: containerView.widthAnchor),
             loginRegisterButton.heightAnchor.constraint(equalToConstant: 50),
         ]
+        
         NSLayoutConstraint.activate(loginRegisterButtonContraints)
-
+        
         let nameTextFieldContraints = [
             nameTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 12),
             nameTextField.topAnchor.constraint(equalTo: containerView.topAnchor),
@@ -184,6 +190,7 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
             emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor),
             emailTextField.widthAnchor.constraint(equalTo: containerView.widthAnchor)
         ]
+        
         emailTextFieldHeightConstraint = emailTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 1/3)
 
         emailTextFieldHeightConstraint?.isActive = true
@@ -227,21 +234,22 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         horizontal.invalidateLayout()
         //avatarCollectionView
         avatarCollectionView.rounded(roundedView: avatarCollectionView, toDiameter: 20)
-        avatarCollectionView.contentInset = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
+        avatarCollectionView.contentInset = UIEdgeInsets(top: 30, left: 0, bottom: 30, right: 0)
         avatarCollectionView.setCollectionViewLayout(horizontal, animated: true)
         avatarCollectionView.delegate = self
         avatarCollectionView.dataSource = self
-        avatarCollectionView.backgroundColor = UIColor.lightGray
+        avatarCollectionView.backgroundColor = UIColor.clear
 
         view.addSubview(avatarCollectionView)
         let collectionConstraint = [
            avatarCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
              avatarCollectionView.centerYAnchor.constraint(equalTo: loginSegmentControl.centerYAnchor, constant: -120),
-           avatarCollectionView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
+             avatarCollectionView.widthAnchor.constraint(equalTo: view.widthAnchor),
            avatarCollectionView.heightAnchor.constraint(equalToConstant: 140)
         ]
         
         NSLayoutConstraint.activate(collectionConstraint)
+        setupKeyboardObserver()
         avatarCollectionView.register(AvatarCell.self, forCellWithReuseIdentifier: "id")
         setupLogo()
     }
@@ -282,8 +290,23 @@ class LoginVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataS
         ]
               
         NSLayoutConstraint.activate(logoConstraint)
-        
-        
+    }
+    
+    func setupKeyboardObserver() {
+         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification , object: nil)
+     }
+    @objc func handleKeyboardWillShow(notification: NSNotification){
+        let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect)
+        let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+     
+       // containerViewBottomAnchor?.constant = keyboardFrame.height/3
+        print(keyboardFrame.height)
+        containerViewCenterYAnchor?.constant = -keyboardFrame.height/7
+       // containerViewBottomAnchor?.isActive = true
+        UIView.animate(withDuration: keyboardDuration) {[weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.view.layoutIfNeeded()
+        }
     }
     
     @objc func handleToggle(_ sender: Any){

@@ -21,6 +21,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var messages :[Message] = []
     var login: LoginClient = LoginClient()
     var chat: ChatClient = ChatClient()
+    var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +42,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         recentMessageTV.dataSource = self
         recentMessageTV.register(RecentMessageCell.self, forCellReuseIdentifier: "ID")
         
-        let newMessageImage = UIImage(imageLiteralResourceName: "new_message")
+        let newMessageImage = UIImage(imageLiteralResourceName: "new-message")
         let logoutImage = UIImage(imageLiteralResourceName: "logout")
        
         navigationItem.hidesBackButton = true
@@ -50,22 +51,30 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: newMessageImage, style: .plain, target: self, action: #selector(showContacts))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
-        //TODO: bug fix, login hit wuth a bad email email, button disables
+
         setupNavBar()
-   
- 
+        
         chat.messagesForUserObserver() { [weak self] message in
             guard let strongSelf = self else { return }
-           
-            if message.toId! != Auth.auth().currentUser?.uid {
-                guard let toId = message.toId else { return }
-                strongSelf.messagesDictionary[toId] = message
+            if let chatPartnerId = message.chatPartnerId() {
+                strongSelf.messagesDictionary[chatPartnerId] = message
                 strongSelf.messages = Array(strongSelf.messagesDictionary.values)
+                print("Array: ", strongSelf.messages.first)
                 strongSelf.messages = strongSelf.messages.sorted { $0.date! > $1.date! }
-                strongSelf.recentMessageTV.reloadData()
+                strongSelf.timer?.invalidate()
+                strongSelf.timer = Timer.scheduledTimer(timeInterval: 0.1, target: strongSelf, selector:#selector(strongSelf.handleReload) , userInfo: nil, repeats: false)
             }
         }
     }
+
+    @objc func handleReload(){
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.recentMessageTV.reloadData()
+        }
+
+    }
+    
     func setupNavBar() {
         login.fetchUserProfile() {[weak self] user in
             guard let strongSelf = self else { return }
@@ -77,6 +86,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
             }
         }
     }
+    
     @objc func logout() {
         login.logout() { [weak self] in
             guard let strongSelf = self else { return }
@@ -87,7 +97,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @objc func showContacts(){
         let contactVC = ContactVC()
         contactVC.recentMessagesVC = self
-        //let friendList = FriendsViewController()
         present(contactVC, animated: true, completion: nil)
     }
     
@@ -108,7 +117,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
             guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else { return }
             let ref = Database.database().reference().child("users").child(chatPartnerId)
             ref.observeSingleEvent(of: .value){ [weak self] snapshot in
@@ -120,8 +128,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                 user.name = (userInfo["name"] as! String)
                 user.email = (userInfo["email"] as! String)
                 user.avatar = URL(string: (userInfo["avatarUrl"] as! String))!
-                let inbox = InboxVC()
-                inbox.contact = user
+                let inbox = ContactInboxVC(collectionViewLayout: UICollectionViewFlowLayout())
                 inbox.user = user
                 strongSelf.navigationController!.pushViewController(inbox, animated: true)
             }
