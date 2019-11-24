@@ -16,7 +16,7 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
+ 
     let cellId = "cellId"
     var user: User? {
         didSet {
@@ -120,7 +120,7 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
         let message = messages[indexPath.row]
         setupCell(cell: cell, message: message)
         cell.messageTextView.text = message.text!
-        cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: message.text!).width + 30
+        cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: message.text!).width + 25
         return cell
     }
     
@@ -129,14 +129,24 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     }
     
     func setupCell(cell: ContactMessageCell, message: Message) {
+        
+        if let profileImage = user?.avatar {
+            cell.profileImageView.loadImageUsingCache(urlString: profileImage.absoluteString)
+        }
         if message.fromId == Auth.auth().currentUser?.uid {
             //out going
             cell.bubbleView.backgroundColor = ContactMessageCell.blueColor
             cell.messageTextView.textColor = .white
+            cell.profileImageView.isHidden = true
+            cell.bubbleViewRightAnchor?.isActive = true
+            cell.bubbleViewLeftAnchor?.isActive = false
         } else {
             //incoming
             cell.bubbleView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
             cell.messageTextView.textColor = .black
+            cell.profileImageView.isHidden = false
+            cell.bubbleViewRightAnchor?.isActive = false
+            cell.bubbleViewLeftAnchor?.isActive = true
         }
 
     }
