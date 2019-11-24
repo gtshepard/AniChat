@@ -19,13 +19,19 @@ class ContactMessageCell: UICollectionViewCell {
         textView.textColor = .white
         return textView
     }()
+    
+    static let blueColor = UIColor(red: 0, green: 137/255, blue: 249/255, alpha: 1)
+    
     let bubbleView: UIView = {
          let view = UIView()
-        view.backgroundColor = UIColor(red: 0, green: 137/255, blue: 249/255, alpha: 1)
+        view.backgroundColor = blueColor
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 16
+        view.layer.masksToBounds = true
         return view
     }()
     
+   
     var bubbleWidthAnchor: NSLayoutConstraint?
     
     override init(frame: CGRect) {

@@ -29,7 +29,8 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     var messages = [Message]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        collectionView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
+        collectionView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 58, right: 0)
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .white
         collectionView.register(ContactMessageCell.self, forCellWithReuseIdentifier: cellId)
@@ -42,7 +43,6 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
         containerView.backgroundColor = .white
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
-        
         
         //x, y , w, h
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -106,7 +106,7 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height: CGFloat = 80
         if let text = messages[indexPath.row].text {
-            height = estimatedFrameForText(text: text).height + 40
+            height = estimatedFrameForText(text: text).height + 30
         }
         return CGSize(width: view.frame.width, height: height)
     }
@@ -116,12 +116,30 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ContactMessageCell
+        
         let message = messages[indexPath.row]
+        setupCell(cell: cell, message: message)
         cell.messageTextView.text = message.text!
         cell.bubbleWidthAnchor?.constant = estimatedFrameForText(text: message.text!).width + 30
         return cell
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    func setupCell(cell: ContactMessageCell, message: Message) {
+        if message.fromId == Auth.auth().currentUser?.uid {
+            //out going
+            cell.bubbleView.backgroundColor = ContactMessageCell.blueColor
+            cell.messageTextView.textColor = .white
+        } else {
+            //incoming
+            cell.bubbleView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+            cell.messageTextView.textColor = .black
+        }
+
+    }
     
     func observeMessages(){
            guard let uid = Auth.auth().currentUser?.uid else { return }
