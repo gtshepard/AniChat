@@ -53,7 +53,6 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             guard let strongSelf = self else { return }
             let inbox = ContactInboxVC(collectionViewLayout: UICollectionViewFlowLayout())
             inbox.user = user
-            //inbox.tableView.reloadData()
             strongSelf.recentMessagesVC!.navigationController?.pushViewController(inbox, animated: true)
         }
     }

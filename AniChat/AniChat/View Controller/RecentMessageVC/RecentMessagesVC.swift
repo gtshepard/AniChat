@@ -22,6 +22,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     var login: LoginClient = LoginClient()
     var chat: ChatClient = ChatClient()
     var timer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(recentMessageTV)
@@ -66,7 +67,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
     }
 
-    
     @objc func handleReload(){
         DispatchQueue.main.async { [weak self] in
             guard let strongSelf = self else { return }
@@ -74,6 +74,7 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         }
 
     }
+    
     func setupNavBar() {
         login.fetchUserProfile() {[weak self] user in
             guard let strongSelf = self else { return }
@@ -96,7 +97,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     @objc func showContacts(){
         let contactVC = ContactVC()
         contactVC.recentMessagesVC = self
-        //let friendList = FriendsViewController()
         present(contactVC, animated: true, completion: nil)
     }
     
@@ -117,7 +117,6 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
             guard let chatPartnerId = messages[indexPath.row].chatPartnerId() else { return }
             let ref = Database.database().reference().child("users").child(chatPartnerId)
             ref.observeSingleEvent(of: .value){ [weak self] snapshot in
