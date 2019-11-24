@@ -7,8 +7,8 @@
 //
 
 import UIKit
-
-class ContactInboxVC: UICollectionViewController, UITextFieldDelegate {
+import Firebase
+class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout {
 
     let inputTextField: UITextField = {
         let textField = UITextField()
@@ -17,19 +17,31 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate {
         return textField
     }()
     
+    let cellId = "cellId"
+    var user: User? {
+        didSet {
+            guard let name = user?.name else { return }
+            navigationItem.title = name
+            observeMessages()
+        }
+    }
     
+    var messages = [Message]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Contact Inbox VC"
+
         collectionView.backgroundColor = .white
+        collectionView.register(ContactMessageCell.self, forCellWithReuseIdentifier: cellId)
         inputTextField.delegate = self
         setupInputComponents()
     }
-
+  
     func setupInputComponents(){
         let containerView = UIView()
+        containerView.backgroundColor = .white
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
+        
         
         //x, y , w, h
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -80,4 +92,48 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate {
         handleSend()
         return true
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: view.frame.height, height: 80)
+    }
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return messages.count
+      }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+     
+        return cell
+    }
+    
+    
+    func observeMessages(){
+           guard let uid = Auth.auth().currentUser?.uid else { return }
+           
+           let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+           userMessagesRef.observe(.childAdded){[weak self] snapshot in
+              // print(snapshot)
+               guard let strongSelf = self else { return }
+               let messageId = snapshot.key
+               let messageRef = Database.database().reference().child("messages").child(messageId)
+               messageRef.observeSingleEvent(of: .value) { snapshot in
+                   guard let messageInfo = snapshot.value as? [String: Any] else { return }
+                   let message = Message()
+                   message.toId = (messageInfo["toId"] as! String)
+                   message.fromId = (messageInfo["fromId"] as! String)
+                   message.text = (messageInfo["text"] as! String)
+                   let date = (messageInfo["date"] as! NSNumber)
+                   message.date = Date.init(timeIntervalSince1970: TimeInterval(truncating: date))
+                   if message.chatPartnerId() == strongSelf.user?.id {
+                       print(message)
+                       strongSelf.messages.append(message)
+                           DispatchQueue.main.async {
+                           strongSelf.collectionView.reloadData()
+                       }
+                   }
+                 
+               }
+           }
+       }
 }

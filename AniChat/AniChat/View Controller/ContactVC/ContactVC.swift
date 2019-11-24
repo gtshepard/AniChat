@@ -20,6 +20,7 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var recentMessagesVC: RecentMessagesVC?
     var contacts :[User] = []
     var chat: ChatClient = ChatClient()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +41,22 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         contactTV.register(ContactCell.self, forCellReuseIdentifier: "ID")
         
     }
+    
     //TODO: fix bug, logout and login on same device loads same uuser data
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         contactTV.reloadData()
     }
 
+    func showInbox(user: User?){
+        dismiss(animated: true) { [weak self] in
+            guard let strongSelf = self else { return }
+            let inbox = ContactInboxVC(collectionViewLayout: UICollectionViewFlowLayout())
+            inbox.user = user
+            //inbox.tableView.reloadData()
+            strongSelf.recentMessagesVC!.navigationController?.pushViewController(inbox, animated: true)
+        }
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }
@@ -62,13 +73,7 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         
-        dismiss(animated: true) { [weak self] in
-            guard let strongSelf = self else { return }
-            let inbox = InboxVC()
-            inbox.contact = strongSelf.contacts[indexPath.row]
-            inbox.tableView.reloadData()
-            strongSelf.recentMessagesVC!.navigationController?.pushViewController(inbox, animated: true)
-        }
+         let contact = contacts[indexPath.row]
+         showInbox(user: contact)
     }
 }
