@@ -45,6 +45,7 @@ class ContactVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //TODO: fix bug, logout and login on same device loads same uuser data
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        contacts.sort { $0.name! < $1.name! }
         contactTV.reloadData()
     }
 

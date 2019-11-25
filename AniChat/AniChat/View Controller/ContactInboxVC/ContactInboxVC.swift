@@ -31,29 +31,27 @@ class ContactInboxVC: UICollectionViewController, UITextFieldDelegate, UICollect
         let containerView = UIView()
         containerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         containerView.backgroundColor = .white
-//        let textField = UITextField()
-//        textField.placeholder = "Enter Some Text"
         containerView.addSubview(self.inputTextField)
-      //  textField.frame = CGRect(x: 0, y: 0, width: view.frame.width,height: 50)
+        //send button
+        
 
         
-        //send button
         let sendButton = UIButton(type: .system)
         sendButton.setTitle("Send", for: .normal)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
         containerView.addSubview(sendButton)
                
+        
         sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
-               
-//        inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8).isActive = true
-//        inputTextField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-//        inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor).isActive = true
-//        inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
-        //separator line
+
+        self.inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8).isActive = true
+        self.inputTextField.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: 80).isActive = true
+        
+        
         let seperatorLineView = UIView()
         seperatorLineView.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
         seperatorLineView.translatesAutoresizingMaskIntoConstraints = false

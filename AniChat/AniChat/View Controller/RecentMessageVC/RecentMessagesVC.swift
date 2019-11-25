@@ -17,6 +17,24 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         return tableView
     }()
     
+    lazy var messageBarButton: UIBarButtonItem = {
+        let button: UIButton = UIButton(type: .custom) as! UIButton
+        button.setImage(UIImage(named: "new-message-40"), for:.normal)
+        button.addTarget(self, action: #selector(showContacts), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 53, height: 31)
+        let messageButton = UIBarButtonItem(customView: button)
+        return messageButton
+    }()
+    
+    lazy var settingsBarButton: UIBarButtonItem = {
+        let button: UIButton = UIButton(type: .custom) as! UIButton
+        button.setImage(UIImage(named: "settings-40"), for:.normal)
+        button.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 53, height: 31)
+        let settingsButton = UIBarButtonItem(customView: button)
+        return settingsButton
+    }()
+    
     var messagesDictionary = [String: Message]()
     var messages :[Message] = []
     var login: LoginClient = LoginClient()
@@ -42,15 +60,18 @@ class RecentMessagesVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         recentMessageTV.dataSource = self
         recentMessageTV.register(RecentMessageCell.self, forCellReuseIdentifier: "ID")
         
-        let newMessageImage = UIImage(imageLiteralResourceName: "new-message")
-        let logoutImage = UIImage(imageLiteralResourceName: "logout")
+//        let newMessageImage = UIImage(imageLiteralResourceName: "new-message-25")
+//        let logoutImage = UIImage(imageLiteralResourceName: "settings-t")
        
         navigationItem.hidesBackButton = true
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: logoutImage , style: .plain, target: self, action: #selector(logout))
+        navigationItem.leftBarButtonItem = settingsBarButton
+        navigationItem.rightBarButtonItem = messageBarButton
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: newMessageImage, style: .plain, target: self, action: #selector(showContacts))
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(image: logoutImage , style: .plain, target: self, action: #selector(logout))
+//
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: newMessageImage, style: .plain, target: self, action: #selector(showContacts))
+  
 
         setupNavBar()
         

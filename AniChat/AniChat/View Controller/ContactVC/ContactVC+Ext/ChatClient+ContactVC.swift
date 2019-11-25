@@ -15,7 +15,9 @@ extension ContactVC {
         chat.contactObserver() { [weak self] user in
             guard let strongSelf = self else { return }
             strongSelf.contacts.append(user)
+            strongSelf.contacts.sort { $0.name! < $1.name! }
             strongSelf.contactTV.reloadData()
+  
         }
     }
 }
